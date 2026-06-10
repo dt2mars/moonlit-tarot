@@ -16,12 +16,14 @@ export function ScreenScrollView({
   children,
   contentContainerStyle,
   showsVerticalScrollIndicator = false,
+  style,
   ...props
 }: ScreenScrollViewProps) {
   return (
     <ScrollView
       contentContainerStyle={[styles.content, contentContainerStyle]}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      style={[styles.scroll, style]}
       {...props}
     >
       {children}
@@ -30,12 +32,15 @@ export function ScreenScrollView({
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+  },
   content: {
     width: '100%',
     maxWidth: 560,
     alignSelf: 'center',
     paddingHorizontal: 22,
     paddingTop: 28,
-    paddingBottom: 34,
+    paddingBottom: 228,
   },
 });

@@ -25,7 +25,6 @@ export function GradientBackground({ children }: GradientBackgroundProps) {
         <View style={styles.moonGlow} />
         <View style={styles.moonCore} />
         <View style={styles.sideGlow} />
-        <View style={styles.bottomGlow} />
         {STARS.map((star, index) => (
           <View
             key={`${star.top}-${index}`}
@@ -102,15 +101,6 @@ const styles = StyleSheet.create({
     height: 260,
     borderRadius: 130,
     backgroundColor: 'rgba(83, 112, 255, 0.1)',
-  },
-  bottomGlow: {
-    position: 'absolute',
-    left: -80,
-    right: -80,
-    bottom: -140,
-    height: 300,
-    borderRadius: 160,
-    backgroundColor: 'rgba(170, 104, 210, 0.2)',
   },
   star: {
     position: 'absolute',
