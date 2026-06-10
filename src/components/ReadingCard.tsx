@@ -24,7 +24,7 @@ export function ReadingCard({ title, subtitle, meta, selected = false, onPress }
       <LinearGradient
         colors={['rgba(255, 255, 255, 0.13)', 'rgba(255, 255, 255, 0.045)']}
         pointerEvents="none"
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill, styles.cardOverlay]}
       />
       <View style={styles.accent}>
         <Text style={styles.accentText}>{meta ?? 'MT'}</Text>
@@ -48,10 +48,11 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.15)',
-    backgroundColor: 'rgba(255, 255, 255, 0.075)',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden',
+    position: 'relative',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.18,
@@ -70,12 +71,17 @@ const styles = StyleSheet.create({
     width: 58,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     paddingVertical: 18,
     gap: 7,
+    zIndex: 1,
+  },
+  cardOverlay: {
+    zIndex: 0,
   },
   accentText: {
     width: 34,
@@ -105,6 +111,7 @@ const styles = StyleSheet.create({
     width: 42,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1,
   },
   chevronText: {
     color: 'rgba(241, 213, 138, 0.74)',

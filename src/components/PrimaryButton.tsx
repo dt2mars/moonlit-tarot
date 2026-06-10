@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
   secondary: {
     borderWidth: 1,
     borderColor: 'rgba(241, 213, 138, 0.34)',
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    backgroundColor: 'rgba(255, 255, 255, 0.14)',
   },
   ghost: {
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.11)',
-    backgroundColor: 'rgba(255, 255, 255, 0.045)',
+    backgroundColor: 'rgba(255, 255, 255, 0.07)',
   },
   danger: {
     borderWidth: 1,

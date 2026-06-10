@@ -7,42 +7,41 @@ type GradientBackgroundProps = {
 };
 
 const STARS = [
-  { top: '8%', left: '12%', size: 2, opacity: 0.55 },
-  { top: '13%', left: '78%', size: 3, opacity: 0.8 },
-  { top: '22%', left: '58%', size: 2, opacity: 0.5 },
-  { top: '34%', left: '88%', size: 2, opacity: 0.55 },
-  { top: '44%', left: '9%', size: 3, opacity: 0.65 },
-  { top: '63%', left: '83%', size: 2, opacity: 0.45 },
-  { top: '76%', left: '18%', size: 2, opacity: 0.5 },
-  { top: '86%', left: '66%', size: 3, opacity: 0.38 },
-  { top: '18%', left: '28%', size: 1, opacity: 0.52 },
-  { top: '52%', left: '71%', size: 1, opacity: 0.48 },
+  { top: '7%', left: '10%', size: 1, opacity: 0.18 },
+  { top: '14%', left: '82%', size: 2, opacity: 0.22 },
+  { top: '25%', left: '92%', size: 1, opacity: 0.16 },
+  { top: '39%', left: '7%', size: 2, opacity: 0.16 },
+  { top: '58%', left: '90%', size: 1, opacity: 0.14 },
+  { top: '76%', left: '14%', size: 1, opacity: 0.16 },
+  { top: '88%', left: '74%', size: 2, opacity: 0.13 },
+  { top: '18%', left: '30%', size: 1, opacity: 0.12 },
 ] as const;
 
 export function GradientBackground({ children }: GradientBackgroundProps) {
   return (
     <LinearGradient colors={['#050817', '#11102C', '#2D1648']} style={styles.root}>
-      <View pointerEvents="none" style={styles.topVignette} />
-      <View pointerEvents="none" style={styles.moonGlow} />
-      <View pointerEvents="none" style={styles.moonCore} />
-      <View pointerEvents="none" style={styles.sideGlow} />
-      <View pointerEvents="none" style={styles.bottomGlow} />
-      {STARS.map((star, index) => (
-        <View
-          key={`${star.top}-${index}`}
-          pointerEvents="none"
-          style={[
-            styles.star,
-            {
-              top: star.top,
-              left: star.left,
-              width: star.size,
-              height: star.size,
-              opacity: star.opacity,
-            },
-          ]}
-        />
-      ))}
+      <View pointerEvents="none" style={styles.decorLayer}>
+        <View style={styles.topVignette} />
+        <View style={styles.moonGlow} />
+        <View style={styles.moonCore} />
+        <View style={styles.sideGlow} />
+        <View style={styles.bottomGlow} />
+        {STARS.map((star, index) => (
+          <View
+            key={`${star.top}-${index}`}
+            style={[
+              styles.star,
+              {
+                top: star.top,
+                left: star.left,
+                width: star.size,
+                height: star.size,
+                opacity: star.opacity,
+              },
+            ]}
+          />
+        ))}
+      </View>
       <SafeAreaView style={styles.safeArea}>{children}</SafeAreaView>
     </LinearGradient>
   );
@@ -52,10 +51,17 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: '#070B1F',
+    overflow: 'hidden',
+  },
+  decorLayer: {
+    ...StyleSheet.absoluteFill,
+    zIndex: 0,
   },
   safeArea: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight ?? 24 : 0,
+    zIndex: 2,
+    elevation: 2,
   },
   moonGlow: {
     position: 'absolute',
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.4,
     shadowRadius: 28,
-    elevation: 8,
+    elevation: 0,
   },
   topVignette: {
     position: 'absolute',
