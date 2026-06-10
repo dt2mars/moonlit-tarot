@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import {
   Animated,
   Image,
+  Platform,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 
 import type { DrawnCard } from '../types';
+import { getTarotCardImageSource } from '../data/tarotCardImages';
 
 type TarotCardProps = {
   drawnCard?: DrawnCard;
@@ -35,6 +37,10 @@ export function TarotCard({
 }: TarotCardProps) {
   const flipProgress = useRef(new Animated.Value(revealed ? 1 : 0)).current;
   const orientationLabel = drawnCard?.orientation === 'reversed' ? reversedLabel : uprightLabel;
+  const imageSource = drawnCard
+    ? drawnCard.card.imageSource || getTarotCardImageSource(drawnCard.card.id)
+    : undefined;
+  const useFlipReveal = Platform.OS === 'web';
 
   useEffect(() => {
     Animated.timing(flipProgress, {
@@ -52,6 +58,38 @@ export function TarotCard({
     inputRange: [0, 1],
     outputRange: ['180deg', '360deg'],
   });
+  const nativeBackOpacity = flipProgress.interpolate({
+    inputRange: [0, 0.75, 1],
+    outputRange: [1, 0.25, 0],
+  });
+  const nativeBackScale = flipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.96],
+  });
+  const nativeFrontOpacity = flipProgress.interpolate({
+    inputRange: [0, 0.35, 1],
+    outputRange: [0, 0.35, 1],
+  });
+  const nativeFrontScale = flipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.96, 1],
+  });
+  const backRevealStyle = useFlipReveal
+    ? {
+        transform: [{ perspective: 1100 }, { rotateY: backRotation }],
+      }
+    : {
+        opacity: nativeBackOpacity,
+        transform: [{ scale: nativeBackScale }],
+      };
+  const frontRevealStyle = useFlipReveal
+    ? {
+        transform: [{ perspective: 1100 }, { rotateY: frontRotation }],
+      }
+    : {
+        opacity: nativeFrontOpacity,
+        transform: [{ scale: nativeFrontScale }],
+      };
 
   return (
     <View style={[styles.wrapper, style]}>
@@ -69,11 +107,10 @@ export function TarotCard({
           pointerEvents={revealed ? 'none' : 'auto'}
           style={[
             styles.face,
+            useFlipReveal ? styles.flipFace : null,
             compact ? styles.compactFace : null,
             styles.back,
-            {
-              transform: [{ perspective: 1100 }, { rotateY: backRotation }],
-            },
+            backRevealStyle,
           ]}
         >
           <View style={styles.backContent}>
@@ -90,21 +127,27 @@ export function TarotCard({
             pointerEvents={revealed ? 'auto' : 'none'}
             style={[
               styles.face,
+              useFlipReveal ? styles.flipFace : null,
               compact ? styles.compactFace : null,
               styles.front,
-              {
-                transform: [{ perspective: 1100 }, { rotateY: frontRotation }],
-              },
+              frontRevealStyle,
             ]}
           >
             <View style={styles.frontContent}>
               <View style={[styles.imageFrame, compact ? styles.compactImageFrame : null]}>
-                <Image
-                  accessibilityLabel={`${drawnCard.card.name} tarot card`}
-                  resizeMode="contain"
-                  source={{ uri: drawnCard.card.imageUrl }}
-                  style={styles.cardImage}
-                />
+                {imageSource ? (
+                  <Image
+                    accessibilityLabel={`${drawnCard.card.name} tarot card`}
+                    resizeMode="contain"
+                    source={imageSource}
+                    style={styles.cardImage}
+                  />
+                ) : (
+                  <View style={styles.imageFallback}>
+                    <Text style={styles.fallbackMoon}>MOONLIT</Text>
+                    <Text style={styles.fallbackText}>No card art mapped</Text>
+                  </View>
+                )}
               </View>
             </View>
           </Animated.View>
@@ -154,8 +197,10 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     borderRadius: 26,
     borderWidth: 1,
-    backfaceVisibility: 'hidden',
     overflow: 'hidden',
+  },
+  flipFace: {
+    backfaceVisibility: 'hidden',
   },
   compactFace: {
     borderRadius: 22,
@@ -259,6 +304,26 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 14,
+  },
+  imageFallback: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(13, 11, 35, 0.84)',
+    gap: 8,
+  },
+  fallbackMoon: {
+    color: '#F1D58A',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 0,
+  },
+  fallbackText: {
+    color: 'rgba(245, 238, 255, 0.7)',
+    fontSize: 12,
+    fontWeight: '700',
   },
   name: {
     color: '#FFF8EA',

@@ -1,3 +1,5 @@
+import type { ImageSourcePropType } from 'react-native';
+
 export type Language = 'en' | 'ko';
 
 export type ReadingTypeId =
@@ -24,7 +26,7 @@ export type AppScreen =
 export interface TarotCardData {
   id: string;
   name: string;
-  imageUrl: string;
+  imageSource: ImageSourcePropType;
   uprightMeaning: string;
   reversedMeaning: string;
   loveMeaning: string;
