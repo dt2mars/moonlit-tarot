@@ -1,7 +1,8 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { TarotCard } from '../components/TarotCard';
 import { STRINGS } from '../data/localization';
@@ -34,7 +35,7 @@ export function ResultScreen({
 
   return (
     <GradientBackground>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScreenScrollView contentContainerStyle={styles.content}>
         <SectionTitle
           title={copy.result.title}
           subtitle={copy.readingTypes.labels[readingType]}
@@ -83,7 +84,7 @@ export function ResultScreen({
           <PrimaryButton title={copy.result.newReading} onPress={onNewReading} variant="secondary" />
           <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
         </View>
-      </ScrollView>
+      </ScreenScrollView>
     </GradientBackground>
   );
 }
@@ -104,13 +105,10 @@ function InfoPanel({ label, value }: InfoPanelProps) {
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 22,
-    paddingBottom: 28,
-    paddingTop: 26,
-    gap: 20,
+    gap: 22,
   },
   section: {
-    gap: 12,
+    gap: 14,
   },
   sectionLabel: {
     color: '#D7B7FF',
@@ -120,26 +118,26 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   cards: {
-    gap: 14,
+    gap: 18,
   },
   cardMeaning: {
     gap: 12,
   },
   panel: {
-    borderRadius: 22,
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.14)',
-    backgroundColor: 'rgba(255, 255, 255, 0.09)',
-    padding: 18,
-    gap: 10,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.085)',
+    padding: 20,
+    gap: 12,
   },
   meaningPanel: {
-    borderRadius: 20,
+    borderRadius: 22,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.12)',
-    backgroundColor: 'rgba(9, 9, 30, 0.28)',
-    padding: 16,
-    gap: 8,
+    borderColor: 'rgba(241, 213, 138, 0.14)',
+    backgroundColor: 'rgba(7, 8, 28, 0.42)',
+    padding: 18,
+    gap: 9,
   },
   panelLabel: {
     color: '#D7B7FF',
@@ -150,8 +148,8 @@ const styles = StyleSheet.create({
   },
   cardName: {
     color: '#FFF8EA',
-    fontSize: 18,
-    fontWeight: '800',
+    fontSize: 19,
+    fontWeight: '900',
     letterSpacing: 0,
   },
   adviceLabel: {
@@ -163,9 +161,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   bodyText: {
-    color: 'rgba(245, 238, 255, 0.79)',
-    fontSize: 15,
-    lineHeight: 23,
+    color: 'rgba(245, 238, 255, 0.82)',
+    fontSize: 16,
+    lineHeight: 24,
   },
   actions: {
     gap: 12,

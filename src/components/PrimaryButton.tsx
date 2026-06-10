@@ -61,16 +61,22 @@ export function PrimaryButton({
 
 const styles = StyleSheet.create({
   shell: {
-    minHeight: 54,
-    borderRadius: 18,
+    width: '100%',
+    minHeight: 56,
+    borderRadius: 20,
     overflow: 'hidden',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.16,
+    shadowRadius: 18,
+    elevation: 3,
   },
   fill: {
-    minHeight: 54,
+    minHeight: 56,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 18,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 13,
   },
   text: {
     fontSize: 16,
@@ -89,13 +95,13 @@ const styles = StyleSheet.create({
   },
   secondary: {
     borderWidth: 1,
-    borderColor: 'rgba(241, 213, 138, 0.28)',
-    backgroundColor: 'rgba(255, 255, 255, 0.11)',
+    borderColor: 'rgba(241, 213, 138, 0.34)',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
   },
   ghost: {
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.12)',
-    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    borderColor: 'rgba(255, 255, 255, 0.11)',
+    backgroundColor: 'rgba(255, 255, 255, 0.045)',
   },
   danger: {
     borderWidth: 1,
@@ -107,6 +113,6 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   disabled: {
-    opacity: 0.58,
+    opacity: 0.62,
   },
 });

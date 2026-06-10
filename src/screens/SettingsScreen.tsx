@@ -1,7 +1,8 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { STRINGS } from '../data/localization';
 import type { Language } from '../types';
@@ -23,7 +24,7 @@ export function SettingsScreen({
 
   return (
     <GradientBackground>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScreenScrollView contentContainerStyle={styles.content}>
         <SectionTitle title={copy.settings.title} />
 
         <View style={styles.panel}>
@@ -53,7 +54,7 @@ export function SettingsScreen({
         </View>
 
         <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
-      </ScrollView>
+      </ScreenScrollView>
     </GradientBackground>
   );
 }
@@ -84,9 +85,6 @@ function LanguageOption({ label, selected, onPress }: LanguageOptionProps) {
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 22,
-    paddingBottom: 28,
-    paddingTop: 26,
     gap: 18,
   },
   panel: {

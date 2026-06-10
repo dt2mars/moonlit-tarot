@@ -67,8 +67,8 @@ export function TarotCard({
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 236,
-    borderRadius: 24,
+    minHeight: 246,
+    borderRadius: 26,
     borderWidth: 1,
     overflow: 'hidden',
     shadowColor: '#000000',
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   compact: {
-    minHeight: 188,
-    borderRadius: 20,
+    minHeight: 196,
+    borderRadius: 22,
   },
   back: {
-    borderColor: 'rgba(241, 213, 138, 0.32)',
-    backgroundColor: 'rgba(16, 13, 42, 0.88)',
+    borderColor: 'rgba(241, 213, 138, 0.38)',
+    backgroundColor: 'rgba(13, 11, 35, 0.92)',
   },
   front: {
     borderColor: 'rgba(255, 255, 255, 0.18)',
@@ -101,18 +101,18 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   backRing: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: 86,
+    height: 86,
+    borderRadius: 43,
     borderWidth: 1,
     borderColor: 'rgba(241, 213, 138, 0.45)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   backMoon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: 'rgba(241, 213, 138, 0.78)',
     shadowColor: '#F1D58A',
     shadowOffset: { width: 0, height: 0 },
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
   },
   backTitle: {
     color: '#F8E6B1',
-    fontSize: 15,
-    fontWeight: '800',
+    fontSize: 16,
+    fontWeight: '900',
     letterSpacing: 0,
   },
   hint: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   frontContent: {
     flex: 1,
-    padding: 16,
+    padding: 18,
     justifyContent: 'space-between',
     gap: 8,
   },
@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#FFF8EA',
-    fontSize: 22,
-    fontWeight: '800',
+    fontSize: 23,
+    fontWeight: '900',
     letterSpacing: 0,
   },
   orientation: {

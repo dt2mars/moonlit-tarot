@@ -1,8 +1,9 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { ReadingCard } from '../components/ReadingCard';
+import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { STRINGS } from '../data/localization';
 import { READING_TYPES } from '../data/readingTypes';
@@ -19,7 +20,7 @@ export function ReadingTypeScreen({ language, onSelect, onBack }: ReadingTypeScr
 
   return (
     <GradientBackground>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScreenScrollView contentContainerStyle={styles.content}>
         <SectionTitle
           title={copy.readingTypes.title}
           subtitle={copy.readingTypes.subtitle}
@@ -27,9 +28,10 @@ export function ReadingTypeScreen({ language, onSelect, onBack }: ReadingTypeScr
         />
 
         <View style={styles.list}>
-          {READING_TYPES.map((readingType) => (
+          {READING_TYPES.map((readingType, index) => (
             <ReadingCard
               key={readingType.id}
+              meta={`${index + 1}`.padStart(2, '0')}
               title={copy.readingTypes.labels[readingType.id]}
               subtitle={copy.readingTypes.descriptions[readingType.id]}
               onPress={() => onSelect(readingType.id)}
@@ -38,19 +40,16 @@ export function ReadingTypeScreen({ language, onSelect, onBack }: ReadingTypeScr
         </View>
 
         <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
-      </ScrollView>
+      </ScreenScrollView>
     </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 22,
-    paddingBottom: 28,
-    paddingTop: 26,
-    gap: 22,
+    gap: 24,
   },
   list: {
-    gap: 12,
+    gap: 14,
   },
 });

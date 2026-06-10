@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { TarotCard } from '../components/TarotCard';
 import { STRINGS } from '../data/localization';
@@ -31,6 +32,7 @@ export function CardDrawScreen({
   );
 
   const allRevealed = revealedCards.every(Boolean);
+  const revealedCount = revealedCards.filter(Boolean).length;
 
   const revealCard = (index: number) => {
     setRevealedCards((current) =>
@@ -40,24 +42,36 @@ export function CardDrawScreen({
 
   return (
     <GradientBackground>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScreenScrollView contentContainerStyle={styles.content}>
         <SectionTitle
           title={copy.draw.title}
           subtitle={copy.draw.subtitle}
           eyebrow={copy.readingTypes.labels[readingType]}
         />
 
+        <View style={styles.progressPanel}>
+          <Text style={styles.progressText}>
+            {revealedCount} / {cards.length}
+          </Text>
+          <View style={styles.progressTrack}>
+            <View
+              style={[styles.progressFill, { width: `${(revealedCount / cards.length) * 100}%` }]}
+            />
+          </View>
+        </View>
+
         <View style={styles.cardList}>
           {cards.map((drawnCard, index) => (
-            <TarotCard
-              key={`${drawnCard.card.id}-${index}`}
-              drawnCard={drawnCard}
-              hint={copy.draw.revealHint}
-              onPress={revealedCards[index] ? undefined : () => revealCard(index)}
-              revealed={revealedCards[index]}
-              reversedLabel={copy.result.reversed}
-              uprightLabel={copy.result.upright}
-            />
+            <View key={`${drawnCard.card.id}-${index}`} style={styles.cardShell}>
+              <TarotCard
+                drawnCard={drawnCard}
+                hint={copy.draw.revealHint}
+                onPress={revealedCards[index] ? undefined : () => revealCard(index)}
+                revealed={revealedCards[index]}
+                reversedLabel={copy.result.reversed}
+                uprightLabel={copy.result.upright}
+              />
+            </View>
           ))}
         </View>
 
@@ -69,20 +83,48 @@ export function CardDrawScreen({
           />
           <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
         </View>
-      </ScrollView>
+      </ScreenScrollView>
     </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 22,
-    paddingBottom: 28,
-    paddingTop: 26,
     gap: 22,
   },
+  progressPanel: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)',
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    padding: 14,
+    gap: 10,
+  },
+  progressText: {
+    color: '#F1D58A',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 0,
+    textAlign: 'center',
+  },
+  progressTrack: {
+    height: 5,
+    borderRadius: 999,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+  },
+  progressFill: {
+    height: 5,
+    borderRadius: 999,
+    backgroundColor: '#F1D58A',
+  },
   cardList: {
-    gap: 14,
+    gap: 16,
+  },
+  cardShell: {
+    width: '100%',
+    maxWidth: 380,
+    alignSelf: 'center',
   },
   actions: {
     gap: 12,

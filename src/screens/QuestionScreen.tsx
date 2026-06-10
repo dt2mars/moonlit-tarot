@@ -3,7 +3,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -12,6 +11,7 @@ import {
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { STRINGS } from '../data/localization';
 import type { Language, ReadingTypeId, SpreadSize } from '../types';
@@ -48,7 +48,7 @@ export function QuestionScreen({
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.keyboardView}
       >
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <ScreenScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <SectionTitle
             title={copy.question.title}
             subtitle={copy.question.subtitle}
@@ -84,7 +84,7 @@ export function QuestionScreen({
             <PrimaryButton title={copy.question.begin} onPress={submitQuestion} />
             <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
           </View>
-        </ScrollView>
+        </ScreenScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
   );
@@ -119,33 +119,30 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingHorizontal: 22,
-    paddingBottom: 28,
-    paddingTop: 26,
     gap: 22,
   },
   inputCard: {
-    minHeight: 184,
-    borderRadius: 24,
+    minHeight: 206,
+    borderRadius: 26,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    padding: 18,
+    borderColor: 'rgba(255, 255, 255, 0.16)',
+    backgroundColor: 'rgba(255, 255, 255, 0.085)',
+    padding: 20,
   },
   input: {
-    minHeight: 148,
+    minHeight: 164,
     color: '#FFF8EA',
     fontSize: 18,
     lineHeight: 26,
   },
   spreadControl: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 12,
   },
   spreadOption: {
     flex: 1,
-    minHeight: 52,
-    borderRadius: 18,
+    minHeight: 54,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.14)',
     alignItems: 'center',

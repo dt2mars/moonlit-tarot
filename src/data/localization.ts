@@ -2,8 +2,10 @@ import type { Language, ReadingTypeId } from '../types';
 
 type LocalizedStrings = {
   home: {
+    eyebrow: string;
     title: string;
     subtitle: string;
+    ritualLine: string;
     dailyCard: string;
     startReading: string;
     journal: string;
@@ -46,6 +48,7 @@ type LocalizedStrings = {
   journal: {
     title: string;
     subtitle: string;
+    emptyTitle: string;
     empty: string;
     delete: string;
   };
@@ -67,16 +70,18 @@ type LocalizedStrings = {
 export const STRINGS: Record<Language, LocalizedStrings> = {
   en: {
     home: {
+      eyebrow: 'Love clarity under moonlight',
       title: 'Moonlit Tarot',
       subtitle: 'A quiet tarot journal for love, no contact, and emotional clarity.',
-      dailyCard: 'Daily Card',
+      ritualLine: 'Pull a card, name the ache, and leave with a little more peace.',
+      dailyCard: 'Daily Love Card',
       startReading: 'Start Relationship Reading',
-      journal: 'Journal / History',
+      journal: 'Open Journal',
       settings: 'Settings',
     },
     readingTypes: {
       title: 'Choose a Reading',
-      subtitle: 'Select the emotional lens for tonight.',
+      subtitle: 'Pick the emotional lens that fits what your heart is holding tonight.',
       labels: {
         noContact: 'No Contact',
         exReconciliation: 'Ex / Reconciliation',
@@ -85,10 +90,10 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         dailyLoveCard: 'Daily Love Card',
       },
       descriptions: {
-        noContact: 'Silence, waiting, restraint, and emotional distance.',
-        exReconciliation: 'Past connections, repair, longing, and honest timing.',
-        loveClarity: 'Mixed signals, new feelings, and relationship direction.',
-        closure: 'Acceptance, release, grief, and moving forward gently.',
+        noContact: 'For silence, waiting, restraint, and the urge to reach out.',
+        exReconciliation: 'For past love, repair, longing, and honest timing.',
+        loveClarity: 'For mixed signals, tender hope, and relationship direction.',
+        closure: 'For acceptance, release, grief, and a softer way forward.',
         dailyLoveCard: 'A one-card message for your heart today.',
       },
     },
@@ -104,17 +109,17 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
     },
     draw: {
       title: 'Draw Your Cards',
-      subtitle: 'Tap each card when you are ready.',
-      revealHint: 'Tap to reveal',
+      subtitle: 'Breathe once. Tap each card when you are ready to see it.',
+      revealHint: 'Reveal',
       continue: 'Read Interpretation',
     },
     result: {
-      title: 'Reading',
+      title: 'Your Reading',
       question: 'Question',
-      cards: 'Cards',
-      interpretation: 'Interpretation',
+      cards: 'Drawn Cards',
+      interpretation: 'Moonlit Reflection',
       save: 'Save to Journal',
-      saved: 'Saved',
+      saved: 'Saved to Journal',
       newReading: 'New Reading',
       upright: 'Upright',
       reversed: 'Reversed',
@@ -122,8 +127,9 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
     },
     journal: {
       title: 'Journal',
-      subtitle: 'Saved readings for reflection and closure.',
-      empty: 'No saved readings yet.',
+      subtitle: 'Saved readings for reflection, pattern-spotting, and closure.',
+      emptyTitle: 'Your journal is quiet tonight.',
+      empty: 'Save a reading when something feels worth returning to.',
       delete: 'Delete',
     },
     settings: {
@@ -143,16 +149,18 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
   },
   ko: {
     home: {
+      eyebrow: '달빛 아래에서 찾는 사랑의 명료함',
       title: 'Moonlit Tarot',
-      subtitle: '사랑, 노컨택, 감정의 명료함을 위한 조용한 타로 저널.',
-      dailyCard: '오늘의 카드',
-      startReading: '관계 리딩 시작',
-      journal: '저널 / 기록',
+      subtitle: '사랑, 노컨택, 감정 정리를 위한 조용한 타로 저널.',
+      ritualLine: '카드를 뽑고, 마음의 결을 바라보고, 조금 더 평온하게 돌아가세요.',
+      dailyCard: '오늘의 러브 카드',
+      startReading: '관계 리딩 시작하기',
+      journal: '저널 열기',
       settings: '설정',
     },
     readingTypes: {
       title: '리딩 선택',
-      subtitle: '오늘 밤 마음에 맞는 주제를 골라보세요.',
+      subtitle: '오늘 밤 마음이 붙잡고 있는 감정에 가장 가까운 주제를 골라보세요.',
       labels: {
         noContact: '노컨택',
         exReconciliation: '전 연인 / 재회',
@@ -161,34 +169,34 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         dailyLoveCard: '오늘의 러브 카드',
       },
       descriptions: {
-        noContact: '침묵, 기다림, 절제, 감정적 거리두기.',
-        exReconciliation: '지난 관계, 회복, 그리움, 솔직한 타이밍.',
-        loveClarity: '애매한 신호, 새로운 감정, 관계의 방향.',
-        closure: '수용, 놓아주기, 슬픔, 부드러운 전진.',
-        dailyLoveCard: '오늘 마음을 위한 한 장의 메시지.',
+        noContact: '침묵, 기다림, 연락하고 싶은 마음을 차분히 바라볼 때.',
+        exReconciliation: '지난 사랑, 회복 가능성, 그리움과 타이밍을 보고 싶을 때.',
+        loveClarity: '애매한 신호, 조심스러운 기대, 관계의 방향이 궁금할 때.',
+        closure: '받아들임, 놓아주기, 슬픔 이후의 부드러운 전진을 위해.',
+        dailyLoveCard: '오늘 내 마음에 필요한 한 장의 메시지.',
       },
     },
     question: {
       title: '달에게 묻기',
-      subtitle: '마음속 질문을 조용히 적어보세요.',
-      placeholder: '문자를 보내도 될까?\n그 사람은 무엇을 느낄까?\n이제 놓아줄 때일까?',
+      subtitle: '지금 마음에 남아 있는 질문을 조심스럽게 적어보세요.',
+      placeholder: '문자를 보내도 될까?\n그 사람은 무엇을 느끼고 있을까?\n이제 놓아줄 때일까?',
       oneCard: '1장',
       threeCards: '3장',
       begin: '카드 뽑기',
       defaultDailyQuestion: '오늘 사랑이 내게 전하는 메시지는 무엇일까?',
-      emptyQuestion: '이 관계에서 내가 이해할 준비가 된 것은 무엇일까?',
+      emptyQuestion: '이 관계에서 지금 내가 이해할 준비가 된 것은 무엇일까?',
     },
     draw: {
       title: '카드 뽑기',
-      subtitle: '준비되면 카드를 눌러 펼쳐보세요.',
-      revealHint: '눌러서 보기',
+      subtitle: '한 번 숨을 고르고, 준비되면 카드를 눌러 펼쳐보세요.',
+      revealHint: '펼치기',
       continue: '해석 보기',
     },
     result: {
-      title: '리딩',
+      title: '나의 리딩',
       question: '질문',
-      cards: '카드',
-      interpretation: '해석',
+      cards: '뽑은 카드',
+      interpretation: '달빛 해석',
       save: '저널에 저장',
       saved: '저장됨',
       newReading: '새 리딩',
@@ -198,8 +206,9 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
     },
     journal: {
       title: '저널',
-      subtitle: '성찰과 마무리를 위해 저장한 리딩.',
-      empty: '아직 저장된 리딩이 없습니다.',
+      subtitle: '성찰과 패턴 발견, 그리고 마무리를 위해 저장한 리딩.',
+      emptyTitle: '오늘 밤 저널은 아직 조용해요.',
+      empty: '다시 돌아보고 싶은 리딩이 생기면 저장해두세요.',
       delete: '삭제',
     },
     settings: {

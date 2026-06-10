@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFF8EA',
-    fontSize: 30,
-    fontWeight: '800',
+    fontSize: 32,
+    fontWeight: '900',
     letterSpacing: 0,
+    lineHeight: 38,
   },
   subtitle: {
     color: 'rgba(245, 238, 255, 0.76)',

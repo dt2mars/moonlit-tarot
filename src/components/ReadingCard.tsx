@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type ReadingCardProps = {
@@ -20,13 +21,22 @@ export function ReadingCard({ title, subtitle, meta, selected = false, onPress }
         pressed && onPress ? styles.pressed : null,
       ]}
     >
-      <View style={styles.accent} />
+      <LinearGradient
+        colors={['rgba(255, 255, 255, 0.13)', 'rgba(255, 255, 255, 0.045)']}
+        pointerEvents="none"
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.accent}>
+        <Text style={styles.accentText}>{meta ?? 'MT'}</Text>
+      </View>
       <View style={styles.content}>
-        {meta ? <Text style={styles.meta}>{meta}</Text> : null}
         <Text numberOfLines={2} style={styles.title}>
           {title}
         </Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
+      </View>
+      <View style={styles.chevron}>
+        <Text style={styles.chevronText}>{'>'}</Text>
       </View>
     </Pressable>
   );
@@ -34,12 +44,13 @@ export function ReadingCard({ title, subtitle, meta, selected = false, onPress }
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 98,
-    borderRadius: 22,
+    minHeight: 112,
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.14)',
-    backgroundColor: 'rgba(255, 255, 255, 0.09)',
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.075)',
     flexDirection: 'row',
+    alignItems: 'center',
     overflow: 'hidden',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 12 },
@@ -56,22 +67,28 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.99 }],
   },
   accent: {
-    width: 4,
-    backgroundColor: '#D7B7FF',
+    width: 58,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   content: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 18,
-    paddingVertical: 16,
-    gap: 5,
+    paddingVertical: 18,
+    gap: 7,
   },
-  meta: {
-    color: '#D7C4FF',
+  accentText: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    overflow: 'hidden',
+    color: '#25163C',
+    backgroundColor: '#E8D38C',
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '900',
     letterSpacing: 0,
-    textTransform: 'uppercase',
+    textAlign: 'center',
+    lineHeight: 34,
   },
   title: {
     color: '#FFF8EA',
@@ -83,5 +100,15 @@ const styles = StyleSheet.create({
     color: 'rgba(245, 238, 255, 0.74)',
     fontSize: 14,
     lineHeight: 20,
+  },
+  chevron: {
+    width: 42,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  chevronText: {
+    color: 'rgba(241, 213, 138, 0.74)',
+    fontSize: 18,
+    fontWeight: '900',
   },
 });

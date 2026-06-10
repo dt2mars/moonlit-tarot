@@ -1,7 +1,8 @@
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { STRINGS } from '../data/localization';
 import type { Language, SavedReading } from '../types';
@@ -36,26 +37,39 @@ export function JournalScreen({
 
   return (
     <GradientBackground>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScreenScrollView contentContainerStyle={styles.content}>
         <SectionTitle title={copy.journal.title} subtitle={copy.journal.subtitle} />
 
         <View style={styles.list}>
           {readings.length === 0 ? (
             <View style={styles.emptyPanel}>
+              <View style={styles.emptyMoon} />
+              <Text style={styles.emptyTitle}>{copy.journal.emptyTitle}</Text>
               <Text style={styles.emptyText}>{copy.journal.empty}</Text>
             </View>
           ) : (
             readings.map((reading) => (
               <View key={reading.id} style={styles.readingItem}>
+                <View style={styles.readingHeader}>
+                  <View style={styles.readingMeta}>
+                    <Text style={styles.date}>{formatDate(reading.createdAt)}</Text>
+                    <Text numberOfLines={1} style={styles.type}>
+                      {copy.readingTypes.labels[reading.readingType]}
+                    </Text>
+                  </View>
+                  <Pressable
+                    accessibilityRole="button"
+                    onPress={() => confirmDelete(reading)}
+                    style={({ pressed }) => [styles.deletePill, pressed ? styles.pressed : null]}
+                  >
+                    <Text style={styles.deleteText}>{copy.journal.delete}</Text>
+                  </Pressable>
+                </View>
                 <Pressable
                   accessibilityRole="button"
                   onPress={() => onOpen(reading)}
                   style={({ pressed }) => [styles.readingPressable, pressed ? styles.pressed : null]}
                 >
-                  <Text style={styles.date}>{formatDate(reading.createdAt)}</Text>
-                  <Text numberOfLines={1} style={styles.type}>
-                    {copy.readingTypes.labels[reading.readingType]}
-                  </Text>
                   <Text numberOfLines={2} style={styles.question}>
                     {reading.question}
                   </Text>
@@ -63,18 +77,13 @@ export function JournalScreen({
                     {reading.cards.map((drawnCard) => drawnCard.card.name).join('  |  ')}
                   </Text>
                 </Pressable>
-                <PrimaryButton
-                  title={copy.journal.delete}
-                  onPress={() => confirmDelete(reading)}
-                  variant="danger"
-                />
               </View>
             ))
           )}
         </View>
 
         <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
-      </ScrollView>
+      </ScreenScrollView>
     </GradientBackground>
   );
 }
@@ -89,36 +98,65 @@ function formatDate(value: string): string {
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 22,
-    paddingBottom: 28,
-    paddingTop: 26,
     gap: 22,
   },
   list: {
     gap: 14,
   },
   emptyPanel: {
-    borderRadius: 22,
+    minHeight: 220,
+    borderRadius: 26,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.14)',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    padding: 22,
+    borderColor: 'rgba(241, 213, 138, 0.16)',
+    backgroundColor: 'rgba(255, 255, 255, 0.07)',
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  emptyMoon: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    backgroundColor: 'rgba(241, 213, 138, 0.82)',
+    shadowColor: '#F1D58A',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    elevation: 6,
+  },
+  emptyTitle: {
+    color: '#FFF8EA',
+    fontSize: 20,
+    fontWeight: '900',
+    letterSpacing: 0,
+    textAlign: 'center',
   },
   emptyText: {
-    color: 'rgba(245, 238, 255, 0.75)',
+    color: 'rgba(245, 238, 255, 0.74)',
     fontSize: 16,
+    lineHeight: 23,
     textAlign: 'center',
   },
   readingItem: {
-    borderRadius: 22,
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.14)',
-    backgroundColor: 'rgba(255, 255, 255, 0.09)',
-    padding: 14,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 16,
+    gap: 14,
+  },
+  readingHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 12,
   },
+  readingMeta: {
+    flex: 1,
+    gap: 5,
+  },
   readingPressable: {
-    gap: 6,
+    gap: 8,
   },
   pressed: {
     opacity: 0.78,
@@ -132,8 +170,8 @@ const styles = StyleSheet.create({
   },
   type: {
     color: '#FFF8EA',
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 19,
+    fontWeight: '900',
     letterSpacing: 0,
   },
   question: {
@@ -145,5 +183,21 @@ const styles = StyleSheet.create({
     color: 'rgba(241, 213, 138, 0.84)',
     fontSize: 13,
     lineHeight: 18,
+  },
+  deletePill: {
+    minHeight: 34,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 122, 148, 0.28)',
+    backgroundColor: 'rgba(128, 39, 72, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  deleteText: {
+    color: '#FFD8DE',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 0,
   },
 });

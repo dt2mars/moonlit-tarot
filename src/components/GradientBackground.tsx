@@ -14,13 +14,18 @@ const STARS = [
   { top: '44%', left: '9%', size: 3, opacity: 0.65 },
   { top: '63%', left: '83%', size: 2, opacity: 0.45 },
   { top: '76%', left: '18%', size: 2, opacity: 0.5 },
+  { top: '86%', left: '66%', size: 3, opacity: 0.38 },
+  { top: '18%', left: '28%', size: 1, opacity: 0.52 },
+  { top: '52%', left: '71%', size: 1, opacity: 0.48 },
 ] as const;
 
 export function GradientBackground({ children }: GradientBackgroundProps) {
   return (
-    <LinearGradient colors={['#070B1F', '#171032', '#32194E']} style={styles.root}>
+    <LinearGradient colors={['#050817', '#11102C', '#2D1648']} style={styles.root}>
+      <View pointerEvents="none" style={styles.topVignette} />
       <View pointerEvents="none" style={styles.moonGlow} />
       <View pointerEvents="none" style={styles.moonCore} />
+      <View pointerEvents="none" style={styles.sideGlow} />
       <View pointerEvents="none" style={styles.bottomGlow} />
       {STARS.map((star, index) => (
         <View
@@ -54,12 +59,12 @@ const styles = StyleSheet.create({
   },
   moonGlow: {
     position: 'absolute',
-    top: -72,
-    right: -52,
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: 'rgba(234, 224, 255, 0.16)',
+    top: -92,
+    right: -68,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(234, 224, 255, 0.18)',
   },
   moonCore: {
     position: 'absolute',
@@ -75,6 +80,23 @@ const styles = StyleSheet.create({
     shadowRadius: 28,
     elevation: 8,
   },
+  topVignette: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 180,
+    backgroundColor: 'rgba(255, 255, 255, 0.025)',
+  },
+  sideGlow: {
+    position: 'absolute',
+    top: 190,
+    left: -120,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(83, 112, 255, 0.1)',
+  },
   bottomGlow: {
     position: 'absolute',
     left: -80,
@@ -82,7 +104,7 @@ const styles = StyleSheet.create({
     bottom: -140,
     height: 300,
     borderRadius: 160,
-    backgroundColor: 'rgba(143, 95, 205, 0.16)',
+    backgroundColor: 'rgba(170, 104, 210, 0.2)',
   },
   star: {
     position: 'absolute',
