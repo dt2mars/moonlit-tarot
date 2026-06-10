@@ -1,9 +1,12 @@
 import type { TarotCardData } from '../types';
 
+const RWS_IMAGE_BASE = 'https://commons.wikimedia.org/wiki/Special:FilePath';
+
 export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'fool',
     name: 'The Fool',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_00_Fool.jpg`,
     uprightMeaning: 'A new emotional chapter, openness, trust, and a willingness to begin again.',
     reversedMeaning: 'Unclear motives, avoidance, or stepping forward before you feel grounded.',
     loveMeaning: 'In love, The Fool asks whether hope is guiding you or whether uncertainty is leading the way.',
@@ -12,6 +15,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'magician',
     name: 'The Magician',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_01_Magician.jpg`,
     uprightMeaning: 'Agency, communication, intention, and the power to shape what happens next.',
     reversedMeaning: 'Mixed signals, manipulation, or words that are not matching behavior.',
     loveMeaning: 'This card highlights communication and the difference between chemistry and consistency.',
@@ -20,6 +24,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'high-priestess',
     name: 'The High Priestess',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_02_High_Priestess.jpg`,
     uprightMeaning: 'Intuition, secrecy, inner knowing, and quiet emotional truth.',
     reversedMeaning: 'Ignoring your instincts, seeking proof too quickly, or feeling disconnected from yourself.',
     loveMeaning: 'There may be more beneath the surface than either person is ready to say.',
@@ -28,6 +33,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'empress',
     name: 'The Empress',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_03_Empress.jpg`,
     uprightMeaning: 'Tenderness, magnetism, care, sensuality, and emotional nourishment.',
     reversedMeaning: 'Overgiving, self-abandonment, insecurity, or waiting to be chosen.',
     loveMeaning: 'Love needs warmth, but it also needs you to remain rooted in your own worth.',
@@ -36,6 +42,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'emperor',
     name: 'The Emperor',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_04_Emperor.jpg`,
     uprightMeaning: 'Boundaries, steadiness, maturity, protection, and clear structure.',
     reversedMeaning: 'Control, emotional rigidity, defensiveness, or a need to be right.',
     loveMeaning: 'This connection may need grounded boundaries more than another emotional push.',
@@ -44,6 +51,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'hierophant',
     name: 'The Hierophant',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_05_Hierophant.jpg`,
     uprightMeaning: 'Commitment, values, tradition, counsel, and shared beliefs.',
     reversedMeaning: 'Pressure to conform, mismatched values, or a bond that resists definition.',
     loveMeaning: 'Ask whether your relationship values truly align, not only whether attraction is present.',
@@ -52,6 +60,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'lovers',
     name: 'The Lovers',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_06_Lovers.jpg`,
     uprightMeaning: 'Choice, union, mutual desire, vulnerability, and values in relationship.',
     reversedMeaning: 'Misalignment, indecision, temptation, or a choice that avoids truth.',
     loveMeaning: 'The Lovers asks for an honest choice, not a fantasy that keeps you suspended.',
@@ -60,6 +69,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'chariot',
     name: 'The Chariot',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_07_Chariot.jpg`,
     uprightMeaning: 'Momentum, direction, courage, and emotional self-command.',
     reversedMeaning: 'Mixed direction, pushing too hard, or trying to control another person.',
     loveMeaning: 'Progress is possible, but only if both people are moving with intention.',
@@ -68,6 +78,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'strength',
     name: 'Strength',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_08_Strength.jpg`,
     uprightMeaning: 'Patience, compassion, resilience, and calm emotional courage.',
     reversedMeaning: 'Self-doubt, resentment, emotional exhaustion, or forcing gentleness.',
     loveMeaning: 'Real strength may look like softness with yourself rather than pursuit of them.',
@@ -76,6 +87,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'hermit',
     name: 'The Hermit',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_09_Hermit.jpg`,
     uprightMeaning: 'Solitude, reflection, healing, and wisdom found away from noise.',
     reversedMeaning: 'Isolation, rumination, loneliness, or hiding from support.',
     loveMeaning: 'Distance may be clarifying what constant contact kept blurry.',
@@ -84,6 +96,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'wheel-of-fortune',
     name: 'Wheel of Fortune',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_10_Wheel_of_Fortune.jpg`,
     uprightMeaning: 'Cycles, timing, change, fate, and a turning point.',
     reversedMeaning: 'Resistance to change, repeating a pattern, or clinging to an old cycle.',
     loveMeaning: 'This connection may be shifting because the old dynamic cannot stay the same.',
@@ -92,6 +105,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'justice',
     name: 'Justice',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_11_Justice.jpg`,
     uprightMeaning: 'Truth, accountability, fairness, clarity, and consequences.',
     reversedMeaning: 'Avoidance, imbalance, denial, or unanswered accountability.',
     loveMeaning: 'The heart wants comfort, but this card asks what is actually fair and true.',
@@ -100,6 +114,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'hanged-man',
     name: 'The Hanged Man',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_12_Hanged_Man.jpg`,
     uprightMeaning: 'Surrender, waiting, new perspective, and release of control.',
     reversedMeaning: 'Stagnation, martyrdom, delay, or waiting with no inner shift.',
     loveMeaning: 'The pause may be asking you to see the bond differently before acting.',
@@ -108,6 +123,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'death',
     name: 'Death',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_13_Death.jpg`,
     uprightMeaning: 'Ending, transformation, release, and a deep emotional threshold.',
     reversedMeaning: 'Resisting closure, fear of change, or keeping an ending half-open.',
     loveMeaning: 'Something in the old form of this connection is asking to be released.',
@@ -116,6 +132,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'temperance',
     name: 'Temperance',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_14_Temperance.jpg`,
     uprightMeaning: 'Healing, balance, patience, integration, and gentle repair.',
     reversedMeaning: 'Emotional extremes, impatience, imbalance, or trying to rush peace.',
     loveMeaning: 'This card favors slow emotional regulation over urgent answers.',
@@ -124,6 +141,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'devil',
     name: 'The Devil',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_15_Devil.jpg`,
     uprightMeaning: 'Attachment, temptation, obsession, fear, and binding patterns.',
     reversedMeaning: 'Breaking a cycle, seeing the pattern clearly, or reclaiming power.',
     loveMeaning: 'Chemistry may be intense, but intensity is not the same as emotional safety.',
@@ -132,6 +150,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'tower',
     name: 'The Tower',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_16_Tower.jpg`,
     uprightMeaning: 'Sudden truth, disruption, revelation, and the collapse of illusion.',
     reversedMeaning: 'Avoiding the obvious, fearing upheaval, or slowly leaving denial.',
     loveMeaning: 'A truth may be uncomfortable because it is clearing away false hope.',
@@ -140,6 +159,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'star',
     name: 'The Star',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_17_Star.jpg`,
     uprightMeaning: 'Hope, renewal, vulnerability, spiritual calm, and emotional recovery.',
     reversedMeaning: 'Discouragement, guardedness, or struggling to believe healing is possible.',
     loveMeaning: 'There is tenderness here, but it may first need space, honesty, and healing.',
@@ -148,6 +168,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'moon',
     name: 'The Moon',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_18_Moon.jpg`,
     uprightMeaning: 'Uncertainty, dreams, projection, fear, and hidden emotional currents.',
     reversedMeaning: 'Confusion lifting, secrets surfacing, or intuition becoming clearer.',
     loveMeaning: 'Not everything is visible yet, and anxiety may be filling in the blanks.',
@@ -156,6 +177,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'sun',
     name: 'The Sun',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_19_Sun.jpg`,
     uprightMeaning: 'Warmth, joy, openness, optimism, and life-giving clarity.',
     reversedMeaning: 'Temporary sadness, unrealistic expectations, or joy blocked by doubt.',
     loveMeaning: 'This card brings honesty and warmth, but only where both people can be open.',
@@ -164,6 +186,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'judgement',
     name: 'Judgement',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_20_Judgement.jpg`,
     uprightMeaning: 'Awakening, reckoning, forgiveness, and a call to rise into truth.',
     reversedMeaning: 'Self-criticism, unfinished lessons, avoidance, or fear of a final answer.',
     loveMeaning: 'A past bond may be asking for honest review rather than automatic return.',
@@ -172,6 +195,7 @@ export const MAJOR_ARCANA: TarotCardData[] = [
   {
     id: 'world',
     name: 'The World',
+    imageUrl: `${RWS_IMAGE_BASE}/RWS_Tarot_21_World.jpg`,
     uprightMeaning: 'Completion, integration, wholeness, and the end of a major cycle.',
     reversedMeaning: 'Unfinished closure, lingering attachment, or difficulty accepting completion.',
     loveMeaning: 'This card suggests a full-circle moment where you can leave with more wisdom.',

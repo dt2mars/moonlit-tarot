@@ -24,6 +24,7 @@ export type AppScreen =
 export interface TarotCardData {
   id: string;
   name: string;
+  imageUrl: string;
   uprightMeaning: string;
   reversedMeaning: string;
   loveMeaning: string;

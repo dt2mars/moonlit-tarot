@@ -1,4 +1,14 @@
-import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { useEffect, useRef } from 'react';
+import {
+  Animated,
+  Image,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import type { DrawnCard } from '../types';
 
@@ -23,53 +33,112 @@ export function TarotCard({
   style,
   onPress,
 }: TarotCardProps) {
-  const orientationLabel =
-    drawnCard?.orientation === 'reversed' ? reversedLabel : uprightLabel;
+  const flipProgress = useRef(new Animated.Value(revealed ? 1 : 0)).current;
+  const orientationLabel = drawnCard?.orientation === 'reversed' ? reversedLabel : uprightLabel;
+
+  useEffect(() => {
+    Animated.timing(flipProgress, {
+      toValue: revealed ? 1 : 0,
+      duration: revealed ? 620 : 240,
+      useNativeDriver: true,
+    }).start();
+  }, [flipProgress, revealed]);
+
+  const backRotation = flipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '180deg'],
+  });
+  const frontRotation = flipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['180deg', '360deg'],
+  });
 
   return (
-    <Pressable
-      accessibilityRole={onPress ? 'button' : undefined}
-      disabled={!onPress}
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.card,
-        compact ? styles.compact : null,
-        !revealed ? styles.back : styles.front,
-        pressed && onPress ? styles.pressed : null,
-        style,
-      ]}
-    >
-      {!revealed || !drawnCard ? (
-        <View style={styles.backContent}>
-          <View style={styles.backRing}>
-            <View style={styles.backMoon} />
+    <View style={[styles.wrapper, style]}>
+      <Pressable
+        accessibilityRole={onPress ? 'button' : undefined}
+        disabled={!onPress}
+        onPress={onPress}
+        style={({ pressed }) => [
+          styles.artPanel,
+          compact ? styles.compactArtPanel : null,
+          pressed && onPress ? styles.pressed : null,
+        ]}
+      >
+        <Animated.View
+          pointerEvents={revealed ? 'none' : 'auto'}
+          style={[
+            styles.face,
+            compact ? styles.compactFace : null,
+            styles.back,
+            {
+              transform: [{ perspective: 1100 }, { rotateY: backRotation }],
+            },
+          ]}
+        >
+          <View style={styles.backContent}>
+            <View style={styles.backRing}>
+              <View style={styles.backMoon} />
+            </View>
+            <Text style={styles.backTitle}>MOONLIT</Text>
+            {hint ? <Text style={styles.hint}>{hint}</Text> : null}
           </View>
-          <Text style={styles.backTitle}>MOONLIT</Text>
-          {hint ? <Text style={styles.hint}>{hint}</Text> : null}
-        </View>
-      ) : (
-        <View style={styles.frontContent}>
-          <Text numberOfLines={1} style={styles.position}>
-            {drawnCard.position}
-          </Text>
-          <Text numberOfLines={compact ? 2 : 3} style={styles.name}>
+        </Animated.View>
+
+        {drawnCard ? (
+          <Animated.View
+            pointerEvents={revealed ? 'auto' : 'none'}
+            style={[
+              styles.face,
+              compact ? styles.compactFace : null,
+              styles.front,
+              {
+                transform: [{ perspective: 1100 }, { rotateY: frontRotation }],
+              },
+            ]}
+          >
+            <View style={styles.frontContent}>
+              <View style={[styles.imageFrame, compact ? styles.compactImageFrame : null]}>
+                <Image
+                  accessibilityLabel={`${drawnCard.card.name} tarot card`}
+                  resizeMode="contain"
+                  source={{ uri: drawnCard.card.imageUrl }}
+                  style={styles.cardImage}
+                />
+              </View>
+            </View>
+          </Animated.View>
+        ) : null}
+      </Pressable>
+
+      {drawnCard && revealed ? (
+        <View style={[styles.explanationPanel, compact ? styles.compactExplanationPanel : null]}>
+          <Text numberOfLines={compact ? 2 : 2} style={styles.name}>
             {drawnCard.card.name}
           </Text>
-          <Text style={styles.orientation}>{orientationLabel}</Text>
-          <Text numberOfLines={compact ? 3 : 5} style={styles.meaning}>
+          <View style={styles.metadataRow}>
+            <Text numberOfLines={1} style={styles.position}>
+              {drawnCard.position}
+            </Text>
+            <Text style={styles.orientation}>{orientationLabel}</Text>
+          </View>
+          <Text numberOfLines={compact ? 2 : 3} style={styles.meaning}>
             {drawnCard.card.loveMeaning}
           </Text>
         </View>
-      )}
-    </Pressable>
+      ) : null}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    minHeight: 246,
+  wrapper: {
+    width: '100%',
+    gap: 12,
+  },
+  artPanel: {
+    height: 594,
     borderRadius: 26,
-    borderWidth: 1,
     overflow: 'hidden',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 14 },
@@ -77,8 +146,18 @@ const styles = StyleSheet.create({
     shadowRadius: 22,
     elevation: 5,
   },
-  compact: {
-    minHeight: 196,
+  compactArtPanel: {
+    height: 444,
+    borderRadius: 22,
+  },
+  face: {
+    ...StyleSheet.absoluteFill,
+    borderRadius: 26,
+    borderWidth: 1,
+    backfaceVisibility: 'hidden',
+    overflow: 'hidden',
+  },
+  compactFace: {
     borderRadius: 22,
   },
   back: {
@@ -87,7 +166,7 @@ const styles = StyleSheet.create({
   },
   front: {
     borderColor: 'rgba(255, 255, 255, 0.18)',
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    backgroundColor: 'rgba(255, 255, 255, 0.09)',
   },
   pressed: {
     opacity: 0.9,
@@ -131,16 +210,55 @@ const styles = StyleSheet.create({
   },
   frontContent: {
     flex: 1,
-    padding: 18,
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 14,
+  },
+  explanationPanel: {
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: 'rgba(241, 213, 138, 0.14)',
+    backgroundColor: 'rgba(7, 8, 28, 0.46)',
+    padding: 16,
+    gap: 9,
+  },
+  compactExplanationPanel: {
+    padding: 14,
     gap: 8,
   },
+  metadataRow: {
+    minHeight: 26,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
   position: {
+    flex: 1,
     color: '#D7B7FF',
     fontSize: 12,
     fontWeight: '800',
     letterSpacing: 0,
     textTransform: 'uppercase',
+  },
+  imageFrame: {
+    width: '100%',
+    maxWidth: 336,
+    aspectRatio: 0.596,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(241, 213, 138, 0.2)',
+    backgroundColor: 'rgba(5, 8, 23, 0.42)',
+    overflow: 'hidden',
+    padding: 3,
+  },
+  compactImageFrame: {
+    maxWidth: 246,
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 14,
   },
   name: {
     color: '#FFF8EA',
