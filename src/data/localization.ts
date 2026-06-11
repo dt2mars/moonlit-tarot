@@ -29,6 +29,7 @@ type LocalizedStrings = {
     dailyFortunePlaceholder: string;
     oneCard: string;
     threeCards: string;
+    basicOneCardReading: string;
     begin: string;
     defaultDailyQuestion: string;
     defaultDailyFortuneQuestion: string;
@@ -73,6 +74,7 @@ type LocalizedStrings = {
     teaserBody: string;
     teaserButton: string;
     homeTeaserBody: string;
+    sampleButton: string;
     badge: string;
     title: string;
     subtitle: string;
@@ -81,6 +83,19 @@ type LocalizedStrings = {
     plusTitle: string;
     plusBenefits: string[];
     note: string;
+  };
+  plusSample: {
+    title: string;
+    subtitle: string;
+    note: string;
+    cardsLabel: string;
+    positions: {
+      current: string;
+      hidden: string;
+      next: string;
+    };
+    interpretationTitle: string;
+    interpretation: string;
   };
   common: {
     back: string;
@@ -133,6 +148,7 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         'What should I focus on today?\nWhat should I watch out for?\nWhat small step would help?',
       oneCard: '1 Card',
       threeCards: '3 Cards',
+      basicOneCardReading: 'Basic 1-card relationship reading',
       begin: 'Draw Cards',
       defaultDailyQuestion: 'What does my heart need to know about love today?',
       defaultDailyFortuneQuestion: "What should I know about today's flow?",
@@ -176,10 +192,11 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
     plus: {
       teaserTitle: 'Go deeper with Moonlit Plus',
       teaserBody:
-        'Unlock deeper 3-card readings, expanded guidance, and more personal reflections for your tarot journal.',
+        'When one card is not enough, Plus gives you a deeper 3-card reading.',
       teaserButton: 'Preview Plus',
       homeTeaserBody:
-        'For moments when one card is not enough, deeper 3-card readings are being prepared.',
+        'When one card is not enough, Plus gives you a deeper 3-card reading.',
+      sampleButton: 'Try a 3-card Plus sample',
       badge: 'Coming soon',
       title: 'Moonlit Plus',
       subtitle: 'For deeper readings when one card is not enough.',
@@ -188,7 +205,7 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         '1-card daily readings',
         'Basic tarot interpretation',
         'Journal saving',
-        'Relationship reading starters',
+        'Basic 1-card relationship reading',
       ],
       plusTitle: 'Plus',
       plusBenefits: [
@@ -200,6 +217,21 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
       ],
       note:
         'Payments are not enabled yet. This preview is here to shape the upcoming Plus experience.',
+    },
+    plusSample: {
+      title: 'Moonlit Plus Sample',
+      subtitle: 'A deeper 3-card reading preview.',
+      note:
+        'This is a preview of the deeper 3-card reading experience being prepared for Moonlit Plus.',
+      cardsLabel: '3-Card Reading',
+      positions: {
+        current: 'Current energy',
+        hidden: 'Hidden influence',
+        next: 'Next guidance',
+      },
+      interpretationTitle: 'Plus Sample Interpretation',
+      interpretation:
+        'Current energy — The High Priestess\nThe present energy asks for quiet attention. There may be something you already sense beneath the surface, even if it has not become easy to name. The High Priestess does not push for immediate action; she invites you to trust the part of you that notices patterns before they become clear.\n\nHidden influence — The Moon\nThe hidden influence is uncertainty. When the light is dim, the mind can fill empty spaces with fear, projection, or unfinished stories. The Moon suggests slowing down before treating anxiety as truth, and letting emotional fog settle before choosing your next move.\n\nNext guidance — The Star\nThe next guidance is gentle recovery. The Star does not promise an instant answer, but it points toward steadiness, hope, and a kinder way of returning to yourself. Choose the step that helps you breathe more freely, even if it is small.\n\nMoonlit note\nYou do not have to force every answer into view tonight. A deeper reading begins by listening carefully, waiting for clarity, and letting hope become calm rather than urgent.',
     },
     common: {
       back: 'Back',
@@ -250,6 +282,7 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         '오늘 무엇에 집중하면 좋을까?\n조심해야 할 흐름은 무엇일까?\n작게 실천하면 좋은 일은 무엇일까?',
       oneCard: '1장',
       threeCards: '3장',
+      basicOneCardReading: '기본 1장 관계 리딩',
       begin: '카드 뽑기',
       defaultDailyQuestion: '오늘 내 연애운은 어떤 흐름일까?',
       defaultDailyFortuneQuestion: '오늘 하루, 내가 알아두면 좋을 흐름은 무엇일까?',
@@ -293,9 +326,10 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
     plus: {
       teaserTitle: '더 깊은 해석이 필요할 때',
       teaserBody:
-        'Moonlit Plus에서는 3장 리딩, 더 자세한 흐름 해석, 감정과 상황을 함께 보는 깊은 안내를 준비하고 있어요.',
+        '한 장으로는 아쉬울 때, Plus에서는 3장으로 더 깊게 흐름을 살펴볼 수 있어요.',
       teaserButton: 'Plus 미리보기',
-      homeTeaserBody: '한 장으로는 아쉬울 때, 더 깊은 3장 리딩을 준비하고 있어요.',
+      homeTeaserBody: '한 장으로는 아쉬울 때, Plus에서는 3장으로 더 깊게 흐름을 살펴볼 수 있어요.',
+      sampleButton: '3장 Plus 샘플 보기',
       badge: '준비 중',
       title: 'Moonlit Plus',
       subtitle: '한 장으로는 부족할 때, 더 깊게 들여다보는 리딩.',
@@ -304,7 +338,7 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         '오늘의 1장 리딩',
         '기본 타로 해석',
         '기록장 저장',
-        '관계 리딩 시작하기',
+        '기본 1장 관계 리딩',
       ],
       plusTitle: 'Moonlit Plus',
       plusBenefits: [
@@ -313,10 +347,24 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         '더 자세한 오늘의 연애운',
         '관계 흐름 해석',
         '기록장 기반 회고',
-        '향후 AI 개인화 해석',
+        '향후 AI 기반 개인화 해석',
       ],
       note:
         '아직 결제는 연결하지 않았습니다. 이 화면은 앞으로 추가될 Moonlit Plus 경험을 미리 보여주는 안내입니다.',
+    },
+    plusSample: {
+      title: 'Moonlit Plus 샘플',
+      subtitle: '더 깊은 3장 리딩을 미리 살펴보세요.',
+      note: '이 리딩은 Moonlit Plus에서 준비 중인 3장 확장 리딩의 미리보기입니다.',
+      cardsLabel: '3장 리딩',
+      positions: {
+        current: '현재 흐름',
+        hidden: '숨은 영향',
+        next: '다음 조언',
+      },
+      interpretationTitle: 'Plus 샘플 해석',
+      interpretation:
+        '현재 흐름 — 여사제\n\n지금의 흐름은 겉으로 드러난 상황보다, 마음속에서 조용히 감지되는 신호가 더 중요한 시기입니다. 누군가의 말이나 눈에 보이는 결과보다, 이미 마음 한편에서 느끼고 있었던 감각이 더 정확할 수 있어요.\n\n여사제는 지금 당장 움직이라고 재촉하는 카드가 아닙니다. 오히려 서둘러 답을 정하기 전에, 내 안에서 반복해서 올라오는 느낌을 차분히 바라보라고 말합니다. 말로 설명하기 어렵지만 계속 신경 쓰이는 일, 괜찮다고 넘겼지만 마음에 남아 있는 감정이 있다면 오늘은 그것을 무시하지 않는 편이 좋습니다.\n\n지금은 바깥의 소음보다 내 안의 조용한 확신을 듣는 시간이 필요합니다. 답은 아직 완전히 드러나지 않았지만, 이미 당신은 무엇이 편안한지, 무엇이 어색한지 조금씩 알고 있을 수 있습니다.\n\n숨은 영향 — 달\n\n겉으로는 괜찮아 보이지만, 안쪽에는 불안과 망설임, 아직 확인되지 않은 생각들이 섞여 있을 수 있습니다. 달은 상황이 실제보다 더 크게 느껴지거나, 마음이 빈칸을 스스로의 상상으로 채우기 쉬운 흐름을 보여줍니다.\n\n그래서 지금은 두려움을 곧바로 사실로 받아들이지 않는 것이 중요합니다. 상대의 반응, 일의 흐름, 오늘의 기분이 분명하지 않다고 해서 그것이 반드시 나쁜 방향을 의미하는 것은 아닙니다. 아직 안개가 걷히지 않았을 뿐, 모든 것이 틀어진 것은 아닐 수 있어요.\n\n달은 숨겨진 감정을 드러내는 카드이기도 합니다. 불안한 마음을 억누르기보다, 무엇이 나를 흔들고 있는지 천천히 구분해보세요. 감정과 현실을 나누어 바라보기 시작하면, 막연했던 걱정이 조금씩 이름을 갖게 되고, 이름을 갖게 된 감정은 전보다 다루기 쉬워집니다.\n\n다음 조언 — 별\n\n별은 혼란이 지나간 뒤 다시 마음을 회복하는 빛에 가깝습니다. 지금 필요한 것은 모든 답을 한 번에 찾는 일이 아니라, 스스로를 조금 더 편안하게 만드는 작은 선택입니다. 무리해서 결론을 내리기보다, 오늘의 나를 덜 지치게 하는 방향을 골라보세요.\n\n별은 아직 완성된 결과보다 회복의 가능성을 보여줍니다. 상황이 당장 크게 바뀌지 않더라도, 마음을 정돈하고 숨을 고르는 것만으로도 흐름은 달라질 수 있습니다. 오늘은 누군가에게 증명하려는 선택보다, 내 마음이 다시 안정될 수 있는 선택이 더 중요합니다.\n\n작은 희망은 대단한 확신에서 시작되지 않을 때가 많습니다. 잠시 멈추고, 불필요한 걱정을 내려놓고, 내가 할 수 있는 가장 부드러운 행동 하나를 고르는 것. 그것만으로도 다음 흐름은 조금 더 선명해질 수 있습니다.\n\n달빛 아래 한마디\n\n지금은 억지로 답을 끌어내기보다, 마음이 천천히 정리될 시간을 주는 편이 좋습니다. 분명해질 것은 결국 분명해지고, 당신을 오래 흔드는 감정도 차분히 바라보면 조금씩 제자리를 찾을 수 있습니다.',
     },
     common: {
       back: '뒤로',

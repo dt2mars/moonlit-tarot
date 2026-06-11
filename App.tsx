@@ -5,6 +5,7 @@ import { CardDrawScreen } from './src/screens/CardDrawScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { JournalScreen } from './src/screens/JournalScreen';
 import { PlusPreviewScreen } from './src/screens/PlusPreviewScreen';
+import { PlusSampleScreen } from './src/screens/PlusSampleScreen';
 import { QuestionScreen } from './src/screens/QuestionScreen';
 import { ReadingTypeScreen } from './src/screens/ReadingTypeScreen';
 import { ResultScreen } from './src/screens/ResultScreen';
@@ -34,7 +35,7 @@ export default function App() {
   const [selectedReadingType, setSelectedReadingType] =
     useState<ReadingTypeId>('loveClarity');
   const [currentQuestion, setCurrentQuestion] = useState('');
-  const [currentSpreadSize, setCurrentSpreadSize] = useState<SpreadSize>(3);
+  const [currentSpreadSize, setCurrentSpreadSize] = useState<SpreadSize>(1);
   const [currentCards, setCurrentCards] = useState<DrawnCard[]>([]);
   const [currentInterpretation, setCurrentInterpretation] = useState('');
   const [savedReadingId, setSavedReadingId] = useState<string | null>(null);
@@ -175,11 +176,6 @@ export default function App() {
       case 'question':
         return (
           <QuestionScreen
-            initialSpreadSize={
-              selectedReadingType === 'dailyFortune' || selectedReadingType === 'dailyLoveCard'
-                ? 1
-                : 3
-            }
             language={language}
             readingType={selectedReadingType}
             onBack={() => setScreen('readingTypes')}
@@ -252,7 +248,15 @@ export default function App() {
         return (
           <PlusPreviewScreen
             language={language}
+            onTrySample={() => setScreen('plusSample')}
             onBack={() => setScreen(plusBackTarget)}
+          />
+        );
+      case 'plusSample':
+        return (
+          <PlusSampleScreen
+            language={language}
+            onBack={() => setScreen('plusPreview')}
           />
         );
       case 'settings':

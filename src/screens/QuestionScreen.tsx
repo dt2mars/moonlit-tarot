@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -20,7 +19,6 @@ type QuestionScreenProps = {
   language: Language;
   readingType: ReadingTypeId;
   initialQuestion?: string;
-  initialSpreadSize?: SpreadSize;
   onStart: (question: string, spreadSize: SpreadSize) => void;
   onBack: () => void;
 };
@@ -29,15 +27,18 @@ export function QuestionScreen({
   language,
   readingType,
   initialQuestion = '',
-  initialSpreadSize = 3,
   onStart,
   onBack,
 }: QuestionScreenProps) {
   const copy = STRINGS[language];
   const [question, setQuestion] = useState(initialQuestion);
-  const [spreadSize, setSpreadSize] = useState<SpreadSize>(initialSpreadSize);
+  const spreadSize: SpreadSize = 1;
   const placeholder =
     readingType === 'dailyFortune' ? copy.question.dailyFortunePlaceholder : copy.question.placeholder;
+  const spreadLabel =
+    readingType === 'dailyFortune' || readingType === 'dailyLoveCard'
+      ? copy.question.oneCard
+      : copy.question.basicOneCardReading;
 
   const submitQuestion = () => {
     const trimmedQuestion = question.trim();
@@ -69,17 +70,9 @@ export function QuestionScreen({
             />
           </View>
 
-          <View style={styles.spreadControl}>
-            <SpreadOption
-              label={copy.question.oneCard}
-              selected={spreadSize === 1}
-              onPress={() => setSpreadSize(1)}
-            />
-            <SpreadOption
-              label={copy.question.threeCards}
-              selected={spreadSize === 3}
-              onPress={() => setSpreadSize(3)}
-            />
+          <View style={styles.spreadCard}>
+            <Text style={styles.spreadMeta}>{copy.plus.freeTitle}</Text>
+            <Text style={styles.spreadLabel}>{spreadLabel}</Text>
           </View>
 
           <View style={styles.actions}>
@@ -89,30 +82,6 @@ export function QuestionScreen({
         </ScreenScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
-  );
-}
-
-type SpreadOptionProps = {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-};
-
-function SpreadOption({ label, selected, onPress }: SpreadOptionProps) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.spreadOption,
-        selected ? styles.spreadOptionSelected : null,
-        pressed ? styles.spreadOptionPressed : null,
-      ]}
-    >
-      <Text style={[styles.spreadLabel, selected ? styles.spreadLabelSelected : null]}>
-        {label}
-      </Text>
-    </Pressable>
   );
 }
 
@@ -137,35 +106,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 26,
   },
-  spreadControl: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  spreadOption: {
-    flex: 1,
-    minHeight: 54,
-    borderRadius: 20,
+  spreadCard: {
+    minHeight: 72,
+    borderRadius: 22,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.14)',
-    alignItems: 'center',
+    borderColor: 'rgba(241, 213, 138, 0.28)',
+    backgroundColor: 'rgba(241, 213, 138, 0.09)',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.07)',
-    paddingHorizontal: 12,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    gap: 6,
   },
-  spreadOptionSelected: {
-    borderColor: 'rgba(241, 213, 138, 0.68)',
-    backgroundColor: 'rgba(241, 213, 138, 0.17)',
-  },
-  spreadOptionPressed: {
-    opacity: 0.86,
+  spreadMeta: {
+    color: '#D7B7FF',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 0,
+    textTransform: 'uppercase',
   },
   spreadLabel: {
-    color: 'rgba(245, 238, 255, 0.72)',
-    fontSize: 15,
-    fontWeight: '800',
-  },
-  spreadLabelSelected: {
     color: '#FFF8EA',
+    fontSize: 16,
+    fontWeight: '900',
+    letterSpacing: 0,
   },
   actions: {
     gap: 12,

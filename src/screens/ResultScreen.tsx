@@ -6,11 +6,6 @@ import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { TarotCard } from '../components/TarotCard';
 import { STRINGS } from '../data/localization';
-import {
-  getCardAdviceForDisplay,
-  getCardMeaningForDisplay,
-  getLocalizedCardName,
-} from '../data/cardCopy';
 import { generateKoreanDailyFortuneReading } from '../utils/mockAi';
 import type { DrawnCard, Language, ReadingTypeId } from '../types';
 
@@ -40,7 +35,6 @@ export function ResultScreen({
   onBack,
 }: ResultScreenProps) {
   const copy = STRINGS[language];
-  const isDailyFortune = readingType === 'dailyFortune';
   const isKoreanDailyFortune = language === 'ko' && readingType === 'dailyFortune';
   const displayedInterpretation = isKoreanDailyFortune
     ? generateKoreanDailyFortuneReading(cards)
@@ -72,20 +66,6 @@ export function ResultScreen({
                   reversedLabel={copy.result.reversed}
                   uprightLabel={copy.result.upright}
                 />
-                {isDailyFortune ? null : (
-                  <View style={styles.meaningPanel}>
-                    <Text style={styles.cardName}>
-                      {getLocalizedCardName(drawnCard.card, language)}
-                    </Text>
-                    <Text style={styles.bodyText}>
-                      {getCardMeaningForDisplay(drawnCard, language, readingType)}
-                    </Text>
-                    <Text style={styles.adviceLabel}>{copy.result.advice}</Text>
-                    <Text style={styles.bodyText}>
-                      {getCardAdviceForDisplay(drawnCard, language, readingType)}
-                    </Text>
-                  </View>
-                )}
               </View>
             ))}
           </View>
@@ -162,34 +142,12 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 12,
   },
-  meaningPanel: {
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: 'rgba(241, 213, 138, 0.14)',
-    backgroundColor: 'rgba(7, 8, 28, 0.42)',
-    padding: 18,
-    gap: 9,
-  },
   panelLabel: {
     color: '#D7B7FF',
     fontSize: 13,
     fontWeight: '800',
     letterSpacing: 0,
     textTransform: 'uppercase',
-  },
-  cardName: {
-    color: '#FFF8EA',
-    fontSize: 19,
-    fontWeight: '900',
-    letterSpacing: 0,
-  },
-  adviceLabel: {
-    color: '#F1D58A',
-    fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 0,
-    textTransform: 'uppercase',
-    marginTop: 4,
   },
   bodyText: {
     color: 'rgba(245, 238, 255, 0.82)',

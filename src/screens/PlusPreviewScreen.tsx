@@ -9,10 +9,11 @@ import type { Language } from '../types';
 
 type PlusPreviewScreenProps = {
   language: Language;
+  onTrySample: () => void;
   onBack: () => void;
 };
 
-export function PlusPreviewScreen({ language, onBack }: PlusPreviewScreenProps) {
+export function PlusPreviewScreen({ language, onTrySample, onBack }: PlusPreviewScreenProps) {
   const copy = STRINGS[language];
 
   return (
@@ -42,6 +43,7 @@ export function PlusPreviewScreen({ language, onBack }: PlusPreviewScreenProps) 
           <Text style={styles.noteText}>{copy.plus.note}</Text>
         </View>
 
+        <PrimaryButton title={copy.plus.sampleButton} onPress={onTrySample} />
         <PrimaryButton title={copy.common.back} onPress={onBack} variant="ghost" />
       </ScreenScrollView>
     </GradientBackground>

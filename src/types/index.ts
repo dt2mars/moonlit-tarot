@@ -23,6 +23,7 @@ export type AppScreen =
   | 'journal'
   | 'journalDetail'
   | 'plusPreview'
+  | 'plusSample'
   | 'settings';
 
 export interface TarotCardData {
