@@ -6,6 +6,12 @@ import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
 import { TarotCard } from '../components/TarotCard';
 import { STRINGS } from '../data/localization';
+import {
+  getCardAdviceForDisplay,
+  getCardMeaningForDisplay,
+  getLocalizedCardName,
+} from '../data/cardCopy';
+import { generateKoreanDailyFortuneReading } from '../utils/mockAi';
 import type { DrawnCard, Language, ReadingTypeId } from '../types';
 
 type ResultScreenProps = {
@@ -32,6 +38,12 @@ export function ResultScreen({
   onBack,
 }: ResultScreenProps) {
   const copy = STRINGS[language];
+  const isDailyFortune = readingType === 'dailyFortune';
+  const isKoreanDailyFortune = language === 'ko' && readingType === 'dailyFortune';
+  const displayedInterpretation = isKoreanDailyFortune
+    ? generateKoreanDailyFortuneReading(cards)
+    : interpretation;
+  const interpretationLabel = copy.result.interpretation;
 
   return (
     <GradientBackground>
@@ -42,7 +54,7 @@ export function ResultScreen({
           eyebrow="Moonlit Tarot"
         />
 
-        <InfoPanel label={copy.result.question} value={question} />
+        {isKoreanDailyFortune ? null : <InfoPanel label={copy.result.question} value={question} />}
 
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{copy.result.cards}</Text>
@@ -52,26 +64,32 @@ export function ResultScreen({
                 <TarotCard
                   compact
                   drawnCard={drawnCard}
+                  language={language}
+                  readingType={readingType}
                   revealed
                   reversedLabel={copy.result.reversed}
                   uprightLabel={copy.result.upright}
                 />
-                <View style={styles.meaningPanel}>
-                  <Text style={styles.cardName}>{drawnCard.card.name}</Text>
-                  <Text style={styles.bodyText}>
-                    {drawnCard.orientation === 'upright'
-                      ? drawnCard.card.uprightMeaning
-                      : drawnCard.card.reversedMeaning}
-                  </Text>
-                  <Text style={styles.adviceLabel}>{copy.result.advice}</Text>
-                  <Text style={styles.bodyText}>{drawnCard.card.advice}</Text>
-                </View>
+                {isDailyFortune ? null : (
+                  <View style={styles.meaningPanel}>
+                    <Text style={styles.cardName}>
+                      {getLocalizedCardName(drawnCard.card, language)}
+                    </Text>
+                    <Text style={styles.bodyText}>
+                      {getCardMeaningForDisplay(drawnCard, language, readingType)}
+                    </Text>
+                    <Text style={styles.adviceLabel}>{copy.result.advice}</Text>
+                    <Text style={styles.bodyText}>
+                      {getCardAdviceForDisplay(drawnCard, language, readingType)}
+                    </Text>
+                  </View>
+                )}
               </View>
             ))}
           </View>
         </View>
 
-        <InfoPanel label={copy.result.interpretation} value={interpretation} />
+        <InfoPanel label={interpretationLabel} value={displayedInterpretation} />
 
         <View style={styles.actions}>
           {onSave ? (

@@ -13,6 +13,8 @@ import {
 
 import type { DrawnCard } from '../types';
 import { getTarotCardImageSource } from '../data/tarotCardImages';
+import { getCardMeaningForDisplay, getLocalizedCardName } from '../data/cardCopy';
+import type { Language, ReadingTypeId } from '../types';
 
 type TarotCardProps = {
   drawnCard?: DrawnCard;
@@ -20,6 +22,8 @@ type TarotCardProps = {
   hint?: string;
   uprightLabel?: string;
   reversedLabel?: string;
+  language?: Language;
+  readingType?: ReadingTypeId;
   compact?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
@@ -31,12 +35,18 @@ export function TarotCard({
   hint,
   uprightLabel = 'Upright',
   reversedLabel = 'Reversed',
+  language = 'en',
+  readingType = 'loveClarity',
   compact = false,
   style,
   onPress,
 }: TarotCardProps) {
   const flipProgress = useRef(new Animated.Value(revealed ? 1 : 0)).current;
   const orientationLabel = drawnCard?.orientation === 'reversed' ? reversedLabel : uprightLabel;
+  const displayName = drawnCard ? getLocalizedCardName(drawnCard.card, language) : '';
+  const shortMeaning = drawnCard
+    ? getCardMeaningForDisplay(drawnCard, language, readingType)
+    : '';
   const imageSource = drawnCard
     ? getTarotCardImageSource(drawnCard.card.id) || drawnCard.card.imageSource
     : undefined;
@@ -137,7 +147,7 @@ export function TarotCard({
               <View style={[styles.imageFrame, compact ? styles.compactImageFrame : null]}>
                 {imageSource ? (
                   <Image
-                    accessibilityLabel={`${drawnCard.card.name} tarot card`}
+                    accessibilityLabel={`${displayName} tarot card`}
                     resizeMode="contain"
                     source={imageSource}
                     style={styles.cardImage}
@@ -157,7 +167,7 @@ export function TarotCard({
       {drawnCard && revealed ? (
         <View style={[styles.explanationPanel, compact ? styles.compactExplanationPanel : null]}>
           <Text numberOfLines={compact ? 2 : 2} style={styles.name}>
-            {drawnCard.card.name}
+            {displayName}
           </Text>
           <View style={styles.metadataRow}>
             <Text numberOfLines={1} style={styles.position}>
@@ -166,7 +176,7 @@ export function TarotCard({
             <Text style={styles.orientation}>{orientationLabel}</Text>
           </View>
           <Text numberOfLines={compact ? 2 : 3} style={styles.meaning}>
-            {drawnCard.card.loveMeaning}
+            {shortMeaning}
           </Text>
         </View>
       ) : null}

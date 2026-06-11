@@ -66,7 +66,9 @@ export function CardDrawScreen({
               <TarotCard
                 drawnCard={drawnCard}
                 hint={copy.draw.revealHint}
+                language={language}
                 onPress={revealedCards[index] ? undefined : () => revealCard(index)}
+                readingType={readingType}
                 revealed={revealedCards[index]}
                 reversedLabel={copy.result.reversed}
                 uprightLabel={copy.result.upright}

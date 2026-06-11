@@ -9,27 +9,27 @@ export const READING_TYPES: ReadingTypeMeta[] = [
   {
     id: 'dailyLoveCard',
     title: 'Daily Love Card',
-    subtitle: 'A one-card message for your heart today.',
+    subtitle: "A gentle look at today's emotional energy.",
   },
   {
     id: 'noContact',
     title: 'No Contact',
-    subtitle: 'For silence, restraint, waiting, and emotional distance.',
+    subtitle: 'For silence, restraint, waiting, and the question of reaching out.',
   },
   {
     id: 'exReconciliation',
     title: 'Ex / Reconciliation',
-    subtitle: 'For past connections, repair, longing, and honest timing.',
+    subtitle: 'For past love, repair, return, and honest timing.',
   },
   {
     id: 'loveClarity',
     title: 'Love Clarity',
-    subtitle: 'For mixed signals, new feelings, and relationship direction.',
+    subtitle: 'For mixed signals, emotional availability, and relationship direction.',
   },
   {
     id: 'closure',
     title: 'Closure',
-    subtitle: 'For acceptance, release, grief, and moving forward gently.',
+    subtitle: 'For acceptance, release, and a softer way forward.',
   },
 ];
 

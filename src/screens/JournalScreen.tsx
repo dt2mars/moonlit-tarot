@@ -4,6 +4,7 @@ import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { ScreenScrollView } from '../components/ScreenScrollView';
 import { SectionTitle } from '../components/SectionTitle';
+import { getLocalizedCardName } from '../data/cardCopy';
 import { STRINGS } from '../data/localization';
 import type { Language, SavedReading } from '../types';
 
@@ -74,7 +75,9 @@ export function JournalScreen({
                     {reading.question}
                   </Text>
                   <Text numberOfLines={2} style={styles.cards}>
-                    {reading.cards.map((drawnCard) => drawnCard.card.name).join('  |  ')}
+                    {reading.cards
+                      .map((drawnCard) => getLocalizedCardName(drawnCard.card, language))
+                      .join('  |  ')}
                   </Text>
                 </Pressable>
               </View>

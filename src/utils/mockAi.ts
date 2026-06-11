@@ -1,5 +1,6 @@
 import { getReadingTypeMeta } from '../data/readingTypes';
 import { STRINGS } from '../data/localization';
+import { getKoreanDailyFortuneCopy, getLocalizedCardName } from '../data/cardCopy';
 import type { DrawnCard, Language, ReadingTypeId } from '../types';
 
 type ReadingTypeGuidance = {
@@ -188,6 +189,10 @@ export function generateMockReading(
   language: Language = 'en',
 ): string {
   if (language === 'ko') {
+    if (readingType === 'dailyFortune') {
+      return generateKoreanDailyFortuneReading(cards);
+    }
+
     return generateKoreanReading(question, readingType, cards);
   }
 
@@ -220,6 +225,26 @@ export function generateMockReading(
   return `${intro}\n\n${guidance.emotionalLens}\n\n${cardSection}\n\n${synthesis}\n\n${reversalNote}\n\n${finalAdvice}`;
 }
 
+export function generateKoreanDailyFortuneReading(cards: DrawnCard[]): string {
+  const [flowCard, watchCard = flowCard, adviceCard = flowCard] = cards;
+  const flowCopy = getKoreanDailyFortuneCopy(flowCard.card.id);
+  const watchCopy = getKoreanDailyFortuneCopy(watchCard.card.id);
+  const adviceCopy = getKoreanDailyFortuneCopy(adviceCard.card.id);
+  const flowName = getLocalizedCardName(flowCard.card, 'ko');
+  const orientationNote = flowCard.orientation === 'reversed' ? ' 역방향으로' : '';
+
+  return (
+    `오늘의 흐름\n` +
+    `${flowName} 카드가${orientationNote} 오늘의 중심에 놓였습니다. ${flowCopy.flow}\n\n` +
+    `조심할 점\n` +
+    `${watchCopy.watch}\n\n` +
+    `작은 조언\n` +
+    `${adviceCopy.advice}\n\n` +
+    `달빛 아래 한마디\n` +
+    `${adviceCopy.closing}`
+  );
+}
+
 function generateKoreanReading(
   question: string,
   readingType: ReadingTypeId,
@@ -231,8 +256,9 @@ function generateKoreanReading(
   const cardSection = cards
     .map((drawnCard, index) => {
       const orientation = drawnCard.orientation === 'upright' ? '정방향' : '역방향';
+      const cardName = getLocalizedCardName(drawnCard.card, 'ko');
       return (
-        `${drawnCard.position}: ${drawnCard.card.name} (${orientation})\n` +
+        `${drawnCard.position}: ${cardName} (${orientation})\n` +
         `${getKoreanCardCue(drawnCard, readingType, index)}`
       );
     })
@@ -304,25 +330,22 @@ function getKoreanCardCue(
 }
 
 function getKoreanOneCardSynthesis(drawnCard: DrawnCard, readingType: ReadingTypeId): string {
-  if (readingType === 'dailyFortune') {
-    return `오늘의 전체 흐름은 ${drawnCard.card.name}의 에너지로 읽힙니다. 이 카드는 하루를 억지로 끌고 가기보다, 타이밍을 보며 필요한 일부터 차분히 정리하라는 메시지에 가깝습니다.`;
-  }
+  const cardName = getLocalizedCardName(drawnCard.card, 'ko');
 
   if (readingType === 'dailyLoveCard') {
-    return `${drawnCard.card.name}은 오늘의 감정 흐름을 부드럽게 비춰줍니다. 관계의 결론을 서두르기보다, 마음이 편안해지는 방향을 먼저 살펴보세요.`;
+    return `${cardName} 카드는 오늘의 감정 흐름을 부드럽게 비춰줍니다. 큰 결론을 서두르기보다, 마음이 편안해지는 방향을 먼저 살펴보세요.`;
   }
 
-  return `${drawnCard.card.name}은 이 관계에서 지금 가장 크게 보아야 할 마음의 흐름을 보여줍니다. 확정적인 답을 찾기보다, 나를 불안하게 만드는 지점과 편안하게 하는 지점을 함께 보세요.`;
+  return `${cardName} 카드는 지금 가장 크게 보아야 할 마음의 흐름을 보여줍니다. 확정적인 답을 찾기보다, 나를 불안하게 만드는 지점과 편안하게 하는 지점을 함께 보세요.`;
 }
 
 function getKoreanThreeCardSynthesis(cards: DrawnCard[], readingType: ReadingTypeId): string {
   const [firstCard, middleCard, lastCard] = cards;
+  const firstName = getLocalizedCardName(firstCard.card, 'ko');
+  const middleName = getLocalizedCardName(middleCard.card, 'ko');
+  const lastName = getLocalizedCardName(lastCard.card, 'ko');
 
-  if (readingType === 'dailyFortune') {
-    return `${firstCard.card.name}에서 시작한 흐름이 ${middleCard.card.name}을 지나 ${lastCard.card.name}으로 이어집니다. 오늘은 전체 운을 크게 단정하기보다, 중간에 생기는 변화를 보고 작은 선택을 조정하는 것이 좋아 보입니다.`;
-  }
-
-  return `${firstCard.card.name}은 지난 흐름을, ${middleCard.card.name}은 지금의 감정 중심을, ${lastCard.card.name}은 다음 선택의 방향을 보여줍니다. 세 카드는 한 가지 결론보다, 마음을 더 안전하게 다루는 방법을 함께 말하고 있습니다.`;
+  return `${firstName}은 지난 흐름을, ${middleName}은 지금의 감정 중심을, ${lastName}은 다음 선택의 방향을 보여줍니다. 세 카드는 한 가지 결론보다, 마음을 더 안전하게 다루는 방법을 함께 말하고 있습니다.`;
 }
 
 function buildThreeCardSection(
