@@ -14,6 +14,7 @@ type HomeScreenProps = {
   onSelectReadingType: (readingType: ReadingTypeId) => void;
   onViewAllReadings: () => void;
   onJournal: () => void;
+  onPreviewPlus: () => void;
   onSettings: () => void;
 };
 
@@ -24,6 +25,7 @@ export function HomeScreen({
   onSelectReadingType,
   onViewAllReadings,
   onJournal,
+  onPreviewPlus,
   onSettings,
 }: HomeScreenProps) {
   const allCopy = STRINGS[language];
@@ -94,6 +96,15 @@ export function HomeScreen({
               onPress={onViewAllReadings}
               variant="secondary"
             />
+            <View style={styles.plusPanel}>
+              <Text style={styles.plusTitle}>{allCopy.plus.title}</Text>
+              <Text style={styles.plusBody}>{allCopy.plus.homeTeaserBody}</Text>
+              <PrimaryButton
+                title={allCopy.plus.teaserButton}
+                onPress={onPreviewPlus}
+                variant="secondary"
+              />
+            </View>
             <PrimaryButton title={copy.settings} onPress={onSettings} variant="ghost" />
           </View>
         </View>
@@ -209,5 +220,24 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 0,
     textTransform: 'uppercase',
+  },
+  plusPanel: {
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: 'rgba(241, 213, 138, 0.24)',
+    backgroundColor: 'rgba(241, 213, 138, 0.08)',
+    padding: 18,
+    gap: 10,
+  },
+  plusTitle: {
+    color: '#FFF8EA',
+    fontSize: 19,
+    fontWeight: '900',
+    letterSpacing: 0,
+  },
+  plusBody: {
+    color: 'rgba(245, 238, 255, 0.76)',
+    fontSize: 14,
+    lineHeight: 21,
   },
 });

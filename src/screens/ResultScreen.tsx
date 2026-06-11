@@ -23,6 +23,7 @@ type ResultScreenProps = {
   saved?: boolean;
   onSave?: () => void;
   onNewReading: () => void;
+  onPreviewPlus: () => void;
   onBack: () => void;
 };
 
@@ -35,6 +36,7 @@ export function ResultScreen({
   saved = false,
   onSave,
   onNewReading,
+  onPreviewPlus,
   onBack,
 }: ResultScreenProps) {
   const copy = STRINGS[language];
@@ -90,6 +92,17 @@ export function ResultScreen({
         </View>
 
         <InfoPanel label={interpretationLabel} value={displayedInterpretation} />
+
+        <View style={styles.plusPanel}>
+          <Text style={styles.plusEyebrow}>Moonlit Plus</Text>
+          <Text style={styles.plusTitle}>{copy.plus.teaserTitle}</Text>
+          <Text style={styles.plusBody}>{copy.plus.teaserBody}</Text>
+          <PrimaryButton
+            title={copy.plus.teaserButton}
+            onPress={onPreviewPlus}
+            variant="secondary"
+          />
+        </View>
 
         <View style={styles.actions}>
           {onSave ? (
@@ -182,6 +195,33 @@ const styles = StyleSheet.create({
     color: 'rgba(245, 238, 255, 0.82)',
     fontSize: 16,
     lineHeight: 24,
+  },
+  plusPanel: {
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(241, 213, 138, 0.28)',
+    backgroundColor: 'rgba(241, 213, 138, 0.09)',
+    padding: 20,
+    gap: 12,
+  },
+  plusEyebrow: {
+    color: '#F1D58A',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 0,
+    textTransform: 'uppercase',
+  },
+  plusTitle: {
+    color: '#FFF8EA',
+    fontSize: 21,
+    fontWeight: '900',
+    letterSpacing: 0,
+    lineHeight: 27,
+  },
+  plusBody: {
+    color: 'rgba(245, 238, 255, 0.78)',
+    fontSize: 15,
+    lineHeight: 22,
   },
   actions: {
     gap: 12,

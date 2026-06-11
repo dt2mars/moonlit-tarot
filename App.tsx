@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { CardDrawScreen } from './src/screens/CardDrawScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { JournalScreen } from './src/screens/JournalScreen';
+import { PlusPreviewScreen } from './src/screens/PlusPreviewScreen';
 import { QuestionScreen } from './src/screens/QuestionScreen';
 import { ReadingTypeScreen } from './src/screens/ReadingTypeScreen';
 import { ResultScreen } from './src/screens/ResultScreen';
@@ -39,6 +40,7 @@ export default function App() {
   const [savedReadingId, setSavedReadingId] = useState<string | null>(null);
   const [selectedSavedReading, setSelectedSavedReading] = useState<SavedReading | null>(null);
   const [drawBackTarget, setDrawBackTarget] = useState<AppScreen>('question');
+  const [plusBackTarget, setPlusBackTarget] = useState<AppScreen>('home');
 
   const refreshReadings = useCallback(async () => {
     const savedReadings = await getSavedReadings();
@@ -155,6 +157,11 @@ export default function App() {
     setScreen('readingTypes');
   };
 
+  const openPlusPreview = (backTarget: AppScreen) => {
+    setPlusBackTarget(backTarget);
+    setScreen('plusPreview');
+  };
+
   const renderScreen = () => {
     switch (screen) {
       case 'readingTypes':
@@ -201,6 +208,7 @@ export default function App() {
             saved={Boolean(savedReadingId)}
             onBack={() => setScreen('home')}
             onNewReading={startNewReading}
+            onPreviewPlus={() => openPlusPreview('result')}
             onSave={saveCurrentReading}
           />
         );
@@ -237,6 +245,14 @@ export default function App() {
             saved
             onBack={() => setScreen('journal')}
             onNewReading={startNewReading}
+            onPreviewPlus={() => openPlusPreview('journalDetail')}
+          />
+        );
+      case 'plusPreview':
+        return (
+          <PlusPreviewScreen
+            language={language}
+            onBack={() => setScreen(plusBackTarget)}
           />
         );
       case 'settings':
@@ -256,6 +272,7 @@ export default function App() {
             onDailyFortune={startDailyFortune}
             onDailyLoveCard={startDailyLoveCard}
             onJournal={openJournal}
+            onPreviewPlus={() => openPlusPreview('home')}
             onSelectReadingType={selectReadingType}
             onSettings={() => setScreen('settings')}
             onViewAllReadings={() => setScreen('readingTypes')}

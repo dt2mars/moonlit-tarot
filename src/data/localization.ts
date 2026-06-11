@@ -68,6 +68,20 @@ type LocalizedStrings = {
     disclaimer: string;
     version: string;
   };
+  plus: {
+    teaserTitle: string;
+    teaserBody: string;
+    teaserButton: string;
+    homeTeaserBody: string;
+    badge: string;
+    title: string;
+    subtitle: string;
+    freeTitle: string;
+    freeBenefits: string[];
+    plusTitle: string;
+    plusBenefits: string[];
+    note: string;
+  };
   common: {
     back: string;
     close: string;
@@ -159,6 +173,34 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
         'This app is for entertainment and self-reflection only. It does not provide medical, legal, financial, or professional advice.',
       version: 'App version',
     },
+    plus: {
+      teaserTitle: 'Go deeper with Moonlit Plus',
+      teaserBody:
+        'Unlock deeper 3-card readings, expanded guidance, and more personal reflections for your tarot journal.',
+      teaserButton: 'Preview Plus',
+      homeTeaserBody:
+        'For moments when one card is not enough, deeper 3-card readings are being prepared.',
+      badge: 'Coming soon',
+      title: 'Moonlit Plus',
+      subtitle: 'For deeper readings when one card is not enough.',
+      freeTitle: 'Free',
+      freeBenefits: [
+        '1-card daily readings',
+        'Basic tarot interpretation',
+        'Journal saving',
+        'Relationship reading starters',
+      ],
+      plusTitle: 'Plus',
+      plusBenefits: [
+        'Deeper 3-card spreads',
+        'Expanded daily fortune',
+        'More detailed love and relationship guidance',
+        'Richer journal reflections',
+        'Future AI-powered personal readings',
+      ],
+      note:
+        'Payments are not enabled yet. This preview is here to shape the upcoming Plus experience.',
+    },
     common: {
       back: 'Back',
       close: 'Close',
@@ -181,8 +223,8 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
       settings: '설정',
     },
     readingTypes: {
-      title: '리딩 선택',
-      subtitle: '지금 알고 싶은 흐름에 맞는 리딩을 골라보세요.',
+      title: '리딩 선택하기',
+      subtitle: '오늘 살펴보고 싶은 흐름에 맞는 리딩을 골라보세요.',
       labels: {
         dailyFortune: '오늘의 생활운',
         noContact: '연락운',
@@ -193,10 +235,10 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
       },
       descriptions: {
         dailyFortune: '오늘 하루의 흐름과 조심할 점을 가볍게 확인해요.',
-        noContact: '연락이 없는 상황, 기다림, 먼저 연락하고 싶은 마음을 차분히 살펴봐요.',
-        exReconciliation: '지난 인연과 재회 가능성, 달라진 흐름과 타이밍을 봅니다.',
+        noContact: '침묵, 기다림, 연락 가능성과 타이밍을 살펴봐요.',
+        exReconciliation: '과거의 관계, 다시 이어질 가능성, 회복의 흐름을 살펴봐요.',
         loveClarity: '상대의 마음, 애매한 신호, 관계의 방향을 살펴봐요.',
-        closure: '미련과 정리, 놓아주기와 회복의 방향을 봅니다.',
+        closure: '받아들임, 내려놓기, 더 부드러운 다음 걸음을 위한 리딩이에요.',
         dailyLoveCard: '오늘 사랑의 분위기와 마음의 방향을 살펴봐요.',
       },
     },
@@ -247,6 +289,34 @@ export const STRINGS: Record<Language, LocalizedStrings> = {
       disclaimer:
         '이 앱은 오락과 자기 성찰을 위한 서비스입니다. 의료, 법률, 금융 또는 전문적인 조언을 제공하지 않습니다.',
       version: '앱 버전',
+    },
+    plus: {
+      teaserTitle: '더 깊은 해석이 필요할 때',
+      teaserBody:
+        'Moonlit Plus에서는 3장 리딩, 더 자세한 흐름 해석, 감정과 상황을 함께 보는 깊은 안내를 준비하고 있어요.',
+      teaserButton: 'Plus 미리보기',
+      homeTeaserBody: '한 장으로는 아쉬울 때, 더 깊은 3장 리딩을 준비하고 있어요.',
+      badge: '준비 중',
+      title: 'Moonlit Plus',
+      subtitle: '한 장으로는 부족할 때, 더 깊게 들여다보는 리딩.',
+      freeTitle: '무료',
+      freeBenefits: [
+        '오늘의 1장 리딩',
+        '기본 타로 해석',
+        '기록장 저장',
+        '관계 리딩 시작하기',
+      ],
+      plusTitle: 'Moonlit Plus',
+      plusBenefits: [
+        '3장 확장 리딩',
+        '더 깊은 오늘의 운세',
+        '더 자세한 오늘의 연애운',
+        '관계 흐름 해석',
+        '기록장 기반 회고',
+        '향후 AI 개인화 해석',
+      ],
+      note:
+        '아직 결제는 연결하지 않았습니다. 이 화면은 앞으로 추가될 Moonlit Plus 경험을 미리 보여주는 안내입니다.',
     },
     common: {
       back: '뒤로',
