@@ -1,5 +1,6 @@
 import { getReadingTypeMeta } from '../data/readingTypes';
-import type { DrawnCard, ReadingTypeId } from '../types';
+import { STRINGS } from '../data/localization';
+import type { DrawnCard, Language, ReadingTypeId } from '../types';
 
 type ReadingTypeGuidance = {
   focus: string;
@@ -17,6 +18,14 @@ type QuestionCue = {
 };
 
 const READING_GUIDANCE: Record<ReadingTypeId, ReadingTypeGuidance> = {
+  dailyFortune: {
+    focus: "today's overall flow, mood, timing, and one useful next step",
+    emotionalLens:
+      'This is a grounded daily check-in rather than a fixed prediction. The card reflects the kind of energy that may be easiest to work with today.',
+    caution: 'Small delays, mood shifts, or unclear timing do not need to become a full story.',
+    practice:
+      'Choose one practical action that makes the day feel lighter, cleaner, or easier to move through.',
+  },
   noContact: {
     focus: 'silence, restraint, and what the quiet is revealing',
     emotionalLens:
@@ -130,11 +139,58 @@ const FINAL_ADVICE_LINES = [
   "Let clarity come through patterns, behavior, and your body's sense of ease.",
 ];
 
+const KOREAN_GUIDANCE: Record<
+  ReadingTypeId,
+  { focus: string; watch: string; practice: string; closing: string }
+> = {
+  dailyFortune: {
+    focus: '오늘의 전체 흐름과 컨디션, 타이밍을 가볍게 살펴봅니다.',
+    watch: '작은 변수나 기분의 흔들림을 너무 큰 신호로 단정하지 않는 것이 좋아요.',
+    practice: '오늘은 해야 할 일을 하나만 분명히 정하고, 무리한 속도보다 안정감을 먼저 챙겨보세요.',
+    closing: '오늘의 운은 정해진 결과가 아니라, 지금의 흐름을 더 잘 타기 위한 작은 안내에 가깝습니다.',
+  },
+  noContact: {
+    focus: '연락이 없는 상황에서 마음이 어디로 흔들리는지 살펴봅니다.',
+    watch: '불안해서 보내는 연락은 잠깐 편해질 수 있지만, 다시 마음을 어지럽힐 수도 있어요.',
+    practice: '연락을 하기 전, 지금 필요한 것이 진짜 대화인지 불안을 잠재우는 일인지 먼저 구분해보세요.',
+    closing: '카드는 단정적인 답보다, 스스로의 평정을 지키는 쪽을 조용히 비춰줍니다.',
+  },
+  exReconciliation: {
+    focus: '지난 인연의 여운, 달라진 점, 다시 이어질 수 있는 흐름을 차분히 봅니다.',
+    watch: '그리움만으로는 같은 패턴을 다르게 만들기 어렵습니다.',
+    practice: '상대의 말보다 달라진 행동, 책임감, 꾸준함을 천천히 확인해보세요.',
+    closing: '재회운은 확답이 아니라, 과거를 다시 선택해도 괜찮은 흐름인지 살피는 과정입니다.',
+  },
+  loveClarity: {
+    focus: '상대의 속마음, 애매한 신호, 관계의 안정감을 중심으로 봅니다.',
+    watch: '아직 확인되지 않은 부분을 마음속에서 너무 빨리 결론 내리지 않는 것이 좋아요.',
+    practice: '끌림보다 일관성, 말보다 행동, 설렘보다 편안함을 함께 살펴보세요.',
+    closing: '이 리딩은 관계의 정답보다, 지금 마음이 안전하게 머물 수 있는지를 비춰줍니다.',
+  },
+  closure: {
+    focus: '미련, 정리, 받아들임, 다시 나에게 돌아오는 흐름을 살펴봅니다.',
+    watch: '완벽한 설명을 기다리다 보면 마음이 같은 자리에 오래 묶일 수 있어요.',
+    practice: '오늘은 끝을 밀어붙이기보다, 나를 조금 덜 아프게 하는 선택 하나를 해보세요.',
+    closing: '마음 정리는 한 번에 끝나는 결론이 아니라, 조금씩 나에게 돌아오는 과정입니다.',
+  },
+  dailyLoveCard: {
+    focus: '오늘 사랑과 감정의 분위기, 마음의 온도, 조심할 지점을 봅니다.',
+    watch: '하루의 감정 기복을 관계 전체의 결론처럼 받아들이지 않는 것이 좋아요.',
+    practice: '오늘은 마음을 다그치기보다, 표현할 것과 지켜야 할 선을 부드럽게 구분해보세요.',
+    closing: '오늘의 연애운은 미래를 확정하기보다, 마음을 더 잘 돌보기 위한 작은 신호입니다.',
+  },
+};
+
 export function generateMockReading(
   question: string,
   readingType: ReadingTypeId,
   cards: DrawnCard[],
+  language: Language = 'en',
 ): string {
+  if (language === 'ko') {
+    return generateKoreanReading(question, readingType, cards);
+  }
+
   const type = getReadingTypeMeta(readingType).title;
   const guidance = READING_GUIDANCE[readingType];
   const cue = getQuestionCue(question);
@@ -152,7 +208,7 @@ export function generateMockReading(
 
   const synthesis =
     cards.length === 1
-      ? buildOneCardSynthesis(cards[0], guidance)
+      ? buildOneCardSynthesis(cards[0], readingType, guidance)
       : buildThreeCardSynthesis(cards, question, readingType, guidance);
 
   const reversalNote = buildReversalNote(cards);
@@ -162,6 +218,38 @@ export function generateMockReading(
     'This reading does not promise a fixed outcome; it may be a sign to stay close to what is steady, honest, and kind to you.';
 
   return `${intro}\n\n${guidance.emotionalLens}\n\n${cardSection}\n\n${synthesis}\n\n${reversalNote}\n\n${finalAdvice}`;
+}
+
+function generateKoreanReading(
+  question: string,
+  readingType: ReadingTypeId,
+  cards: DrawnCard[],
+): string {
+  const label = STRINGS.ko.readingTypes.labels[readingType];
+  const guidance = KOREAN_GUIDANCE[readingType];
+  const questionLine = question.trim() ? `질문: "${question.trim()}"` : '오늘의 흐름을 중심으로 봅니다.';
+  const cardSection = cards
+    .map((drawnCard, index) => {
+      const orientation = drawnCard.orientation === 'upright' ? '정방향' : '역방향';
+      return (
+        `${drawnCard.position}: ${drawnCard.card.name} (${orientation})\n` +
+        `${getKoreanCardCue(drawnCard, readingType, index)}`
+      );
+    })
+    .join('\n\n');
+  const synthesis =
+    cards.length === 1
+      ? getKoreanOneCardSynthesis(cards[0], readingType)
+      : getKoreanThreeCardSynthesis(cards, readingType);
+
+  return (
+    `${label} 리딩입니다. ${questionLine}\n\n` +
+    `${guidance.focus}\n\n` +
+    `${cardSection}\n\n` +
+    `${synthesis}\n\n` +
+    `조심할 점: ${guidance.watch}\n\n` +
+    `작은 조언: ${guidance.practice} ${guidance.closing}`
+  );
 }
 
 function buildOneCardSection(
@@ -176,6 +264,65 @@ function buildOneCardSection(
     `${drawnCard.position}: ${drawnCard.card.name} (${drawnCard.orientation})\n` +
     `This card may suggest ${meaning}. ${context}`
   );
+}
+
+function getKoreanCardCue(
+  drawnCard: DrawnCard,
+  readingType: ReadingTypeId,
+  index: number,
+): string {
+  if (readingType === 'dailyFortune') {
+    const upright = [
+      '오늘의 흐름은 비교적 자연스럽게 열릴 수 있습니다. 큰 결정보다는 작은 선택을 또렷하게 하는 데 도움이 되는 카드예요.',
+      '오늘은 주변 분위기와 타이밍을 살피면 일이 조금 더 부드럽게 풀릴 수 있습니다.',
+      '지금 할 수 있는 작은 정리나 실천이 하루의 리듬을 안정시켜줄 수 있어요.',
+    ];
+    const reversed = [
+      '오늘은 서두르기보다 속도를 낮추라는 신호일 수 있습니다. 컨디션과 마음의 여유를 먼저 확인해보세요.',
+      '예상과 다른 흐름이 있어도 곧바로 나쁜 징조로 볼 필요는 없습니다. 확인하고 조정하는 태도가 중요해요.',
+      '완벽하게 해내려는 마음보다, 한 가지를 차분히 마무리하는 쪽이 더 유리해 보입니다.',
+    ];
+    return drawnCard.orientation === 'upright'
+      ? upright[index] ?? upright[0]
+      : reversed[index] ?? reversed[0];
+  }
+
+  const upright = [
+    '이 카드는 마음의 흐름이 비교적 선명하게 드러나는 지점을 보여줍니다.',
+    '지금 관계 안에서 실제로 움직이고 있는 감정과 태도를 살펴보게 합니다.',
+    '다음 선택은 감정보다 안정감과 존중을 기준으로 삼으라는 조언에 가깝습니다.',
+  ];
+  const reversed = [
+    '역방향은 아직 막혀 있거나 말로 다 정리되지 않은 마음을 보여줄 수 있어요.',
+    '상대나 상황을 너무 빨리 단정하기보다, 반복되는 행동을 천천히 확인하는 편이 좋습니다.',
+    '지금은 밀어붙이기보다 마음을 가라앉히고 나를 지키는 선택이 더 중요해 보입니다.',
+  ];
+
+  return drawnCard.orientation === 'upright'
+    ? upright[index] ?? upright[0]
+    : reversed[index] ?? reversed[0];
+}
+
+function getKoreanOneCardSynthesis(drawnCard: DrawnCard, readingType: ReadingTypeId): string {
+  if (readingType === 'dailyFortune') {
+    return `오늘의 전체 흐름은 ${drawnCard.card.name}의 에너지로 읽힙니다. 이 카드는 하루를 억지로 끌고 가기보다, 타이밍을 보며 필요한 일부터 차분히 정리하라는 메시지에 가깝습니다.`;
+  }
+
+  if (readingType === 'dailyLoveCard') {
+    return `${drawnCard.card.name}은 오늘의 감정 흐름을 부드럽게 비춰줍니다. 관계의 결론을 서두르기보다, 마음이 편안해지는 방향을 먼저 살펴보세요.`;
+  }
+
+  return `${drawnCard.card.name}은 이 관계에서 지금 가장 크게 보아야 할 마음의 흐름을 보여줍니다. 확정적인 답을 찾기보다, 나를 불안하게 만드는 지점과 편안하게 하는 지점을 함께 보세요.`;
+}
+
+function getKoreanThreeCardSynthesis(cards: DrawnCard[], readingType: ReadingTypeId): string {
+  const [firstCard, middleCard, lastCard] = cards;
+
+  if (readingType === 'dailyFortune') {
+    return `${firstCard.card.name}에서 시작한 흐름이 ${middleCard.card.name}을 지나 ${lastCard.card.name}으로 이어집니다. 오늘은 전체 운을 크게 단정하기보다, 중간에 생기는 변화를 보고 작은 선택을 조정하는 것이 좋아 보입니다.`;
+  }
+
+  return `${firstCard.card.name}은 지난 흐름을, ${middleCard.card.name}은 지금의 감정 중심을, ${lastCard.card.name}은 다음 선택의 방향을 보여줍니다. 세 카드는 한 가지 결론보다, 마음을 더 안전하게 다루는 방법을 함께 말하고 있습니다.`;
 }
 
 function buildThreeCardSection(
@@ -197,8 +344,20 @@ function buildThreeCardSection(
     .join('\n\n');
 }
 
-function buildOneCardSynthesis(drawnCard: DrawnCard, guidance: ReadingTypeGuidance): string {
+function buildOneCardSynthesis(
+  drawnCard: DrawnCard,
+  readingType: ReadingTypeId,
+  guidance: ReadingTypeGuidance,
+): string {
   const cardTone = getCardTone(drawnCard);
+
+  if (readingType === 'dailyFortune') {
+    return (
+      `The center of today's fortune is ${cardTone}. ` +
+      `${drawnCard.card.name} does not ask you to force the day; it asks you to move with timing, attention, and one steady choice. ` +
+      `${guidance.caution}`
+    );
+  }
 
   return (
     `The heart of the reading is ${cardTone}. ` +
@@ -303,6 +462,15 @@ function getUprightContext(
   loveMeaning: string,
   index: number,
 ): string {
+  if (readingType === 'dailyFortune') {
+    const contexts = [
+      "For Daily Fortune, this may highlight the day's main rhythm and where your attention can be most useful.",
+      'This points toward what to watch in your mood, timing, or practical choices today.',
+      'The card may show a small step that helps the day feel more grounded and manageable.',
+    ];
+    return contexts[index] ?? contexts[0];
+  }
+
   if (readingType === 'loveClarity') {
     const contexts = [
       'For Love Clarity, this may highlight what feels mutual, what feels confusing, and where emotional safety needs to be felt through action.',
@@ -347,6 +515,15 @@ function getReversedContext(
   cueKey: QuestionKey,
   index: number,
 ): string {
+  if (readingType === 'dailyFortune') {
+    const contexts = [
+      'For Daily Fortune, the reversal may point to a small delay, low energy, or a place where the day asks for gentler pacing.',
+      'This suggests you may need to check assumptions before moving quickly.',
+      'The card advises one simple adjustment rather than forcing the day to unfold perfectly.',
+    ];
+    return contexts[index] ?? contexts[0];
+  }
+
   if (readingType === 'loveClarity') {
     const contexts = [
       'For Love Clarity, the reversal may point to mixed signals or emotional availability that has not become consistent yet.',
@@ -388,6 +565,8 @@ function getReversedContext(
 
 function getReadingTypeSynthesis(readingType: ReadingTypeId): string {
   const syntheses: Record<ReadingTypeId, string> = {
+    dailyFortune:
+      'This could indicate that today is best approached through practical awareness, flexible timing, and one small choice that supports your energy.',
     noContact:
       'This could indicate that the wisest movement is not immediate contact, but a steadier understanding of what the silence is showing you.',
     exReconciliation:

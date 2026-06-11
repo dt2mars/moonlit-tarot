@@ -2,26 +2,38 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { GradientBackground } from '../components/GradientBackground';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { ReadingCard } from '../components/ReadingCard';
 import { ScreenScrollView } from '../components/ScreenScrollView';
 import { STRINGS } from '../data/localization';
-import type { Language } from '../types';
+import type { Language, ReadingTypeId } from '../types';
 
 type HomeScreenProps = {
   language: Language;
-  onDailyCard: () => void;
-  onStartReading: () => void;
+  onDailyFortune: () => void;
+  onDailyLoveCard: () => void;
+  onSelectReadingType: (readingType: ReadingTypeId) => void;
+  onViewAllReadings: () => void;
   onJournal: () => void;
   onSettings: () => void;
 };
 
 export function HomeScreen({
   language,
-  onDailyCard,
-  onStartReading,
+  onDailyFortune,
+  onDailyLoveCard,
+  onSelectReadingType,
+  onViewAllReadings,
   onJournal,
   onSettings,
 }: HomeScreenProps) {
-  const copy = STRINGS[language].home;
+  const allCopy = STRINGS[language];
+  const copy = allCopy.home;
+  const relationshipTypes: ReadingTypeId[] = [
+    'loveClarity',
+    'noContact',
+    'exReconciliation',
+    'closure',
+  ];
 
   return (
     <GradientBackground>
@@ -44,11 +56,46 @@ export function HomeScreen({
           </View>
         </View>
 
-        <View style={styles.actions}>
-          <PrimaryButton title={copy.dailyCard} onPress={onDailyCard} />
-          <PrimaryButton title={copy.startReading} onPress={onStartReading} variant="secondary" />
-          <PrimaryButton title={copy.journal} onPress={onJournal} variant="ghost" />
-          <PrimaryButton title={copy.settings} onPress={onSettings} variant="ghost" />
+        <View style={styles.sections}>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{copy.todayTitle}</Text>
+            <ReadingCard
+              meta="01"
+              title={copy.dailyFortune}
+              subtitle={copy.dailyFortuneSubtitle}
+              onPress={onDailyFortune}
+            />
+            <ReadingCard
+              meta="02"
+              title={copy.dailyLoveCard}
+              subtitle={copy.dailyLoveSubtitle}
+              onPress={onDailyLoveCard}
+            />
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{copy.relationshipTitle}</Text>
+            {relationshipTypes.map((readingType, index) => (
+              <ReadingCard
+                key={readingType}
+                meta={`${index + 1}`.padStart(2, '0')}
+                title={allCopy.readingTypes.labels[readingType]}
+                subtitle={allCopy.readingTypes.descriptions[readingType]}
+                onPress={() => onSelectReadingType(readingType)}
+              />
+            ))}
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{copy.journalTitle}</Text>
+            <PrimaryButton title={copy.journal} onPress={onJournal} />
+            <PrimaryButton
+              title={allCopy.readingTypes.title}
+              onPress={onViewAllReadings}
+              variant="secondary"
+            />
+            <PrimaryButton title={copy.settings} onPress={onSettings} variant="ghost" />
+          </View>
         </View>
       </ScreenScrollView>
     </GradientBackground>
@@ -58,8 +105,7 @@ export function HomeScreen({
 const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
-    justifyContent: 'space-between',
-    gap: 34,
+    gap: 30,
   },
   hero: {
     alignItems: 'center',
@@ -151,7 +197,17 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     textAlign: 'center',
   },
-  actions: {
+  sections: {
+    gap: 24,
+  },
+  section: {
     gap: 12,
+  },
+  sectionTitle: {
+    color: '#D7B7FF',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 0,
+    textTransform: 'uppercase',
   },
 });

@@ -38,7 +38,7 @@ export function TarotCard({
   const flipProgress = useRef(new Animated.Value(revealed ? 1 : 0)).current;
   const orientationLabel = drawnCard?.orientation === 'reversed' ? reversedLabel : uprightLabel;
   const imageSource = drawnCard
-    ? drawnCard.card.imageSource || getTarotCardImageSource(drawnCard.card.id)
+    ? getTarotCardImageSource(drawnCard.card.id) || drawnCard.card.imageSource
     : undefined;
   const useFlipReveal = Platform.OS === 'web';
 

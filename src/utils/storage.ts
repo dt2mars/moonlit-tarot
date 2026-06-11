@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import type { SavedReading } from '../types';
+import type { Language, SavedReading } from '../types';
 
-const STORAGE_KEY = '@moonlit_tarot/readings';
+const READINGS_STORAGE_KEY = '@moonlit_tarot/readings';
+const LANGUAGE_STORAGE_KEY = '@moonlit_tarot/language';
 
 export async function getSavedReadings(): Promise<SavedReading[]> {
-  const rawReadings = await AsyncStorage.getItem(STORAGE_KEY);
+  const rawReadings = await AsyncStorage.getItem(READINGS_STORAGE_KEY);
   if (!rawReadings) {
     return [];
   }
@@ -30,13 +31,22 @@ export async function saveReading(
     createdAt: new Date().toISOString(),
   };
 
-  await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify([savedReading, ...existingReadings]));
+  await AsyncStorage.setItem(READINGS_STORAGE_KEY, JSON.stringify([savedReading, ...existingReadings]));
   return savedReading;
 }
 
 export async function deleteReading(id: string): Promise<SavedReading[]> {
   const existingReadings = await getSavedReadings();
   const nextReadings = existingReadings.filter((reading) => reading.id !== id);
-  await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(nextReadings));
+  await AsyncStorage.setItem(READINGS_STORAGE_KEY, JSON.stringify(nextReadings));
   return nextReadings;
+}
+
+export async function getSavedLanguage(): Promise<Language | null> {
+  const savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+  return savedLanguage === 'en' || savedLanguage === 'ko' ? savedLanguage : null;
+}
+
+export async function saveLanguage(language: Language): Promise<void> {
+  await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
 }

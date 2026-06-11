@@ -36,6 +36,8 @@ export function QuestionScreen({
   const copy = STRINGS[language];
   const [question, setQuestion] = useState(initialQuestion);
   const [spreadSize, setSpreadSize] = useState<SpreadSize>(initialSpreadSize);
+  const placeholder =
+    readingType === 'dailyFortune' ? copy.question.dailyFortunePlaceholder : copy.question.placeholder;
 
   const submitQuestion = () => {
     const trimmedQuestion = question.trim();
@@ -59,7 +61,7 @@ export function QuestionScreen({
             <TextInput
               multiline
               onChangeText={setQuestion}
-              placeholder={copy.question.placeholder}
+              placeholder={placeholder}
               placeholderTextColor="rgba(245, 238, 255, 0.42)"
               style={styles.input}
               textAlignVertical="top"

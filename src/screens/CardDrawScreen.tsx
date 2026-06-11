@@ -26,7 +26,7 @@ export function CardDrawScreen({
   onBack,
 }: CardDrawScreenProps) {
   const copy = STRINGS[language];
-  const [cards] = useState<DrawnCard[]>(() => drawCards(spreadSize));
+  const [cards] = useState<DrawnCard[]>(() => drawCards(spreadSize, language, readingType));
   const [revealedCards, setRevealedCards] = useState<boolean[]>(() =>
     Array.from({ length: spreadSize }, () => false),
   );

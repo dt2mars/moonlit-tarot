@@ -3,6 +3,7 @@ import type { ImageSourcePropType } from 'react-native';
 export type Language = 'en' | 'ko';
 
 export type ReadingTypeId =
+  | 'dailyFortune'
   | 'noContact'
   | 'exReconciliation'
   | 'loveClarity'

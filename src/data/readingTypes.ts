@@ -2,6 +2,16 @@ import type { ReadingTypeMeta } from '../types';
 
 export const READING_TYPES: ReadingTypeMeta[] = [
   {
+    id: 'dailyFortune',
+    title: 'Daily Fortune',
+    subtitle: 'A quick card for your day, mood, and timing.',
+  },
+  {
+    id: 'dailyLoveCard',
+    title: 'Daily Love Card',
+    subtitle: 'A one-card message for your heart today.',
+  },
+  {
     id: 'noContact',
     title: 'No Contact',
     subtitle: 'For silence, restraint, waiting, and emotional distance.',
@@ -20,11 +30,6 @@ export const READING_TYPES: ReadingTypeMeta[] = [
     id: 'closure',
     title: 'Closure',
     subtitle: 'For acceptance, release, grief, and moving forward gently.',
-  },
-  {
-    id: 'dailyLoveCard',
-    title: 'Daily Love Card',
-    subtitle: 'A one-card message for your heart today.',
   },
 ];
 

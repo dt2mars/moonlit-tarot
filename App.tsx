@@ -18,7 +18,13 @@ import type {
 } from './src/types';
 import { STRINGS } from './src/data/localization';
 import { generateMockReading } from './src/utils/mockAi';
-import { deleteReading, getSavedReadings, saveReading } from './src/utils/storage';
+import {
+  deleteReading,
+  getSavedLanguage,
+  getSavedReadings,
+  saveLanguage,
+  saveReading,
+} from './src/utils/storage';
 
 export default function App() {
   const [screen, setScreen] = useState<AppScreen>('home');
@@ -43,7 +49,35 @@ export default function App() {
     void refreshReadings();
   }, [refreshReadings]);
 
-  const startDailyCard = () => {
+  useEffect(() => {
+    const loadLanguage = async () => {
+      const savedLanguage = await getSavedLanguage();
+      if (savedLanguage) {
+        setLanguage(savedLanguage);
+      }
+    };
+
+    void loadLanguage();
+  }, []);
+
+  const handleLanguageChange = (nextLanguage: Language) => {
+    setLanguage(nextLanguage);
+    void saveLanguage(nextLanguage);
+  };
+
+  const startDailyFortune = () => {
+    const dailyQuestion = STRINGS[language].question.defaultDailyFortuneQuestion;
+    setSelectedReadingType('dailyFortune');
+    setCurrentQuestion(dailyQuestion);
+    setCurrentSpreadSize(1);
+    setCurrentCards([]);
+    setCurrentInterpretation('');
+    setSavedReadingId(null);
+    setDrawBackTarget('home');
+    setScreen('draw');
+  };
+
+  const startDailyLoveCard = () => {
     const dailyQuestion = STRINGS[language].question.defaultDailyQuestion;
     setSelectedReadingType('dailyLoveCard');
     setCurrentQuestion(dailyQuestion);
@@ -71,7 +105,7 @@ export default function App() {
   };
 
   const completeCardDraw = (cards: DrawnCard[]) => {
-    const interpretation = generateMockReading(currentQuestion, selectedReadingType, cards);
+    const interpretation = generateMockReading(currentQuestion, selectedReadingType, cards, language);
     setCurrentCards(cards);
     setCurrentInterpretation(interpretation);
     setScreen('result');
@@ -134,7 +168,11 @@ export default function App() {
       case 'question':
         return (
           <QuestionScreen
-            initialSpreadSize={selectedReadingType === 'dailyLoveCard' ? 1 : 3}
+            initialSpreadSize={
+              selectedReadingType === 'dailyFortune' || selectedReadingType === 'dailyLoveCard'
+                ? 1
+                : 3
+            }
             language={language}
             readingType={selectedReadingType}
             onBack={() => setScreen('readingTypes')}
@@ -207,7 +245,7 @@ export default function App() {
             appVersion="1.0.0"
             language={language}
             onBack={() => setScreen('home')}
-            onLanguageChange={setLanguage}
+            onLanguageChange={handleLanguageChange}
           />
         );
       case 'home':
@@ -215,10 +253,12 @@ export default function App() {
         return (
           <HomeScreen
             language={language}
-            onDailyCard={startDailyCard}
+            onDailyFortune={startDailyFortune}
+            onDailyLoveCard={startDailyLoveCard}
             onJournal={openJournal}
+            onSelectReadingType={selectReadingType}
             onSettings={() => setScreen('settings')}
-            onStartReading={() => setScreen('readingTypes')}
+            onViewAllReadings={() => setScreen('readingTypes')}
           />
         );
     }
