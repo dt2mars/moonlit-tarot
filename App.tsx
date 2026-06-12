@@ -9,6 +9,7 @@ import { PlusSampleScreen } from './src/screens/PlusSampleScreen';
 import { QuestionScreen } from './src/screens/QuestionScreen';
 import { ResultScreen } from './src/screens/ResultScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
+import { SplashScreen } from './src/screens/SplashScreen';
 import type {
   AppScreen,
   DrawnCard,
@@ -28,6 +29,7 @@ import {
 } from './src/utils/storage';
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
   const [screen, setScreen] = useState<AppScreen>('home');
   const [language, setLanguage] = useState<Language>('en');
   const [readings, setReadings] = useState<SavedReading[]>([]);
@@ -48,6 +50,14 @@ export default function App() {
   useEffect(() => {
     void refreshReadings();
   }, [refreshReadings]);
+
+  useEffect(() => {
+    const splashTimer = setTimeout(() => {
+      setShowSplash(false);
+    }, 1300);
+
+    return () => clearTimeout(splashTimer);
+  }, []);
 
   useEffect(() => {
     const loadLanguage = async () => {
@@ -269,7 +279,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      {renderScreen()}
+      {showSplash ? <SplashScreen /> : renderScreen()}
     </>
   );
 }
