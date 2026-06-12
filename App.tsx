@@ -7,7 +7,6 @@ import { JournalScreen } from './src/screens/JournalScreen';
 import { PlusPreviewScreen } from './src/screens/PlusPreviewScreen';
 import { PlusSampleScreen } from './src/screens/PlusSampleScreen';
 import { QuestionScreen } from './src/screens/QuestionScreen';
-import { ReadingTypeScreen } from './src/screens/ReadingTypeScreen';
 import { ResultScreen } from './src/screens/ResultScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import type {
@@ -40,8 +39,6 @@ export default function App() {
   const [currentInterpretation, setCurrentInterpretation] = useState('');
   const [savedReadingId, setSavedReadingId] = useState<string | null>(null);
   const [selectedSavedReading, setSelectedSavedReading] = useState<SavedReading | null>(null);
-  const [drawBackTarget, setDrawBackTarget] = useState<AppScreen>('question');
-  const [plusBackTarget, setPlusBackTarget] = useState<AppScreen>('home');
 
   const refreshReadings = useCallback(async () => {
     const savedReadings = await getSavedReadings();
@@ -76,7 +73,6 @@ export default function App() {
     setCurrentCards([]);
     setCurrentInterpretation('');
     setSavedReadingId(null);
-    setDrawBackTarget('home');
     setScreen('draw');
   };
 
@@ -88,7 +84,6 @@ export default function App() {
     setCurrentCards([]);
     setCurrentInterpretation('');
     setSavedReadingId(null);
-    setDrawBackTarget('home');
     setScreen('draw');
   };
 
@@ -103,7 +98,6 @@ export default function App() {
     setCurrentCards([]);
     setCurrentInterpretation('');
     setSavedReadingId(null);
-    setDrawBackTarget('question');
     setScreen('draw');
   };
 
@@ -155,30 +149,18 @@ export default function App() {
     setSavedReadingId(null);
     setCurrentCards([]);
     setCurrentInterpretation('');
-    setScreen('readingTypes');
-  };
-
-  const openPlusPreview = (backTarget: AppScreen) => {
-    setPlusBackTarget(backTarget);
-    setScreen('plusPreview');
+    setSelectedSavedReading(null);
+    setScreen('home');
   };
 
   const renderScreen = () => {
     switch (screen) {
-      case 'readingTypes':
-        return (
-          <ReadingTypeScreen
-            language={language}
-            onBack={() => setScreen('home')}
-            onSelect={selectReadingType}
-          />
-        );
       case 'question':
         return (
           <QuestionScreen
             language={language}
             readingType={selectedReadingType}
-            onBack={() => setScreen('readingTypes')}
+            onBack={() => setScreen('home')}
             onStart={startQuestionReading}
           />
         );
@@ -189,7 +171,7 @@ export default function App() {
             language={language}
             readingType={selectedReadingType}
             spreadSize={currentSpreadSize}
-            onBack={() => setScreen(drawBackTarget)}
+            onBack={() => setScreen('home')}
             onComplete={completeCardDraw}
           />
         );
@@ -204,7 +186,7 @@ export default function App() {
             saved={Boolean(savedReadingId)}
             onBack={() => setScreen('home')}
             onNewReading={startNewReading}
-            onPreviewPlus={() => openPlusPreview('result')}
+            onPreviewPlus={() => setScreen('plusPreview')}
             onSave={saveCurrentReading}
           />
         );
@@ -239,9 +221,9 @@ export default function App() {
             question={selectedSavedReading.question}
             readingType={selectedSavedReading.readingType}
             saved
-            onBack={() => setScreen('journal')}
+            onBack={() => setScreen('home')}
             onNewReading={startNewReading}
-            onPreviewPlus={() => openPlusPreview('journalDetail')}
+            onPreviewPlus={() => setScreen('plusPreview')}
           />
         );
       case 'plusPreview':
@@ -249,14 +231,14 @@ export default function App() {
           <PlusPreviewScreen
             language={language}
             onTrySample={() => setScreen('plusSample')}
-            onBack={() => setScreen(plusBackTarget)}
+            onBack={() => setScreen('home')}
           />
         );
       case 'plusSample':
         return (
           <PlusSampleScreen
             language={language}
-            onBack={() => setScreen('plusPreview')}
+            onBack={() => setScreen('home')}
           />
         );
       case 'settings':
@@ -276,10 +258,9 @@ export default function App() {
             onDailyFortune={startDailyFortune}
             onDailyLoveCard={startDailyLoveCard}
             onJournal={openJournal}
-            onPreviewPlus={() => openPlusPreview('home')}
+            onPreviewPlus={() => setScreen('plusPreview')}
             onSelectReadingType={selectReadingType}
             onSettings={() => setScreen('settings')}
-            onViewAllReadings={() => setScreen('readingTypes')}
           />
         );
     }

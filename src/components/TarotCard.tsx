@@ -16,6 +16,8 @@ import { getTarotCardImageSource } from '../data/tarotCardImages';
 import { getCardMeaningForDisplay, getLocalizedCardName } from '../data/cardCopy';
 import type { Language, ReadingTypeId } from '../types';
 
+const CARD_BACK_IMAGE = require('../../assets/card-back/moonlit-card-back.png');
+
 type TarotCardProps = {
   drawnCard?: DrawnCard;
   revealed: boolean;
@@ -124,11 +126,12 @@ export function TarotCard({
           ]}
         >
           <View style={styles.backContent}>
-            <View style={styles.backRing}>
-              <View style={styles.backMoon} />
-            </View>
-            <Text style={styles.backTitle}>MOONLIT</Text>
-            {hint ? <Text style={styles.hint}>{hint}</Text> : null}
+            <Image
+              accessibilityLabel={hint ?? 'Moonlit tarot card back'}
+              resizeMode="contain"
+              source={CARD_BACK_IMAGE}
+              style={styles.cardBackImage}
+            />
           </View>
         </Animated.View>
 
@@ -216,8 +219,8 @@ const styles = StyleSheet.create({
     borderRadius: 22,
   },
   back: {
-    borderColor: 'rgba(241, 213, 138, 0.38)',
-    backgroundColor: 'rgba(13, 11, 35, 0.92)',
+    borderColor: 'rgba(241, 213, 138, 0.48)',
+    backgroundColor: '#0B0A24',
   },
   front: {
     borderColor: 'rgba(255, 255, 255, 0.18)',
@@ -231,37 +234,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
-    gap: 14,
+    padding: 6,
   },
-  backRing: {
-    width: 86,
-    height: 86,
-    borderRadius: 43,
-    borderWidth: 1,
-    borderColor: 'rgba(241, 213, 138, 0.45)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backMoon: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: 'rgba(241, 213, 138, 0.78)',
-    shadowColor: '#F1D58A',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 20,
-  },
-  backTitle: {
-    color: '#F8E6B1',
-    fontSize: 16,
-    fontWeight: '900',
-    letterSpacing: 0,
-  },
-  hint: {
-    color: 'rgba(245, 238, 255, 0.64)',
-    fontSize: 13,
+  cardBackImage: {
+    width: '100%',
+    height: '100%',
   },
   frontContent: {
     flex: 1,

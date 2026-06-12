@@ -16,7 +16,6 @@ export type CardOrientation = 'upright' | 'reversed';
 
 export type AppScreen =
   | 'home'
-  | 'readingTypes'
   | 'question'
   | 'draw'
   | 'result'

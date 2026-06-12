@@ -12,7 +12,6 @@ type HomeScreenProps = {
   onDailyFortune: () => void;
   onDailyLoveCard: () => void;
   onSelectReadingType: (readingType: ReadingTypeId) => void;
-  onViewAllReadings: () => void;
   onJournal: () => void;
   onPreviewPlus: () => void;
   onSettings: () => void;
@@ -23,7 +22,6 @@ export function HomeScreen({
   onDailyFortune,
   onDailyLoveCard,
   onSelectReadingType,
-  onViewAllReadings,
   onJournal,
   onPreviewPlus,
   onSettings,
@@ -91,11 +89,6 @@ export function HomeScreen({
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{copy.journalTitle}</Text>
             <PrimaryButton title={copy.journal} onPress={onJournal} />
-            <PrimaryButton
-              title={allCopy.readingTypes.title}
-              onPress={onViewAllReadings}
-              variant="secondary"
-            />
             <View style={styles.plusPanel}>
               <Text style={styles.plusTitle}>{allCopy.plus.title}</Text>
               <Text style={styles.plusBody}>{allCopy.plus.homeTeaserBody}</Text>
