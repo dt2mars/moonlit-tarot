@@ -39,15 +39,15 @@ export function HomeScreen({
     <GradientBackground>
       <ScreenScrollView contentContainerStyle={styles.content}>
         <View style={styles.hero}>
-          <Text style={styles.eyebrow}>{copy.eyebrow}</Text>
-          <View style={styles.moonStage}>
-            <View style={styles.orbitOuter} />
-            <View style={styles.orbitInner} />
-            <View style={styles.moonSeal}>
-              <View style={styles.innerMoon} />
-            </View>
-          </View>
           <View style={styles.heroCopy}>
+            <View style={styles.phaseRow}>
+              <View style={[styles.phaseMoon, styles.phaseNew]} />
+              <View style={[styles.phaseMoon, styles.phaseHalf]} />
+              <View style={[styles.phaseMoon, styles.phaseFull]} />
+              <View style={[styles.phaseMoon, styles.phaseHalf]} />
+              <View style={[styles.phaseMoon, styles.phaseNew]} />
+            </View>
+            <Text style={styles.eyebrow}>{copy.eyebrow}</Text>
             <Text style={styles.title}>{copy.title}</Text>
             <Text style={styles.subtitle}>{copy.subtitle}</Text>
           </View>
@@ -109,12 +109,11 @@ export function HomeScreen({
 const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
-    gap: 30,
+    gap: 26,
   },
   hero: {
-    alignItems: 'center',
-    paddingTop: 18,
-    gap: 20,
+    paddingTop: 34,
+    gap: 14,
   },
   eyebrow: {
     color: '#D7B7FF',
@@ -124,48 +123,28 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
   },
-  moonStage: {
-    width: 184,
-    height: 184,
+  phaseRow: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 9,
+    marginBottom: 2,
   },
-  orbitOuter: {
-    position: 'absolute',
-    width: 178,
-    height: 178,
-    borderRadius: 89,
+  phaseMoon: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'rgba(241, 213, 138, 0.16)',
+    borderColor: 'rgba(241, 213, 138, 0.62)',
   },
-  orbitInner: {
-    position: 'absolute',
-    width: 136,
-    height: 136,
-    borderRadius: 68,
-    borderWidth: 1,
-    borderColor: 'rgba(215, 183, 255, 0.18)',
+  phaseNew: {
+    backgroundColor: 'rgba(7, 8, 28, 0.36)',
   },
-  moonSeal: {
-    width: 118,
-    height: 118,
-    borderRadius: 59,
-    borderWidth: 1,
-    borderColor: 'rgba(241, 213, 138, 0.34)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+  phaseHalf: {
+    backgroundColor: 'rgba(241, 213, 138, 0.42)',
   },
-  innerMoon: {
-    width: 66,
-    height: 66,
-    borderRadius: 33,
-    backgroundColor: '#F1D58A',
-    shadowColor: '#F1D58A',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.55,
-    shadowRadius: 26,
-    elevation: 8,
+  phaseFull: {
+    backgroundColor: 'rgba(241, 213, 138, 0.9)',
   },
   title: {
     color: '#FFF8EA',
@@ -177,6 +156,9 @@ const styles = StyleSheet.create({
   },
   heroCopy: {
     alignItems: 'center',
+    paddingHorizontal: 18,
+    paddingTop: 8,
+    paddingBottom: 6,
     gap: 10,
   },
   subtitle: {

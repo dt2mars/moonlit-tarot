@@ -126,12 +126,15 @@ export function TarotCard({
           ]}
         >
           <View style={styles.backContent}>
-            <Image
-              accessibilityLabel={hint ?? 'Moonlit tarot card back'}
-              resizeMode="contain"
-              source={CARD_BACK_IMAGE}
-              style={styles.cardBackImage}
-            />
+            <View style={styles.cardBackFrame}>
+              <Image
+                accessibilityLabel={hint ?? 'Moonlit tarot card back'}
+                resizeMode="cover"
+                source={CARD_BACK_IMAGE}
+                style={styles.cardBackImage}
+              />
+              <View pointerEvents="none" style={styles.cardBackInnerLine} />
+            </View>
           </View>
         </Animated.View>
 
@@ -234,11 +237,34 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 6,
+    padding: 7,
+  },
+  cardBackFrame: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 21,
+    borderWidth: 1,
+    borderColor: 'rgba(241, 213, 138, 0.36)',
+    backgroundColor: '#07081C',
+    overflow: 'hidden',
+    shadowColor: '#F1D58A',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
   },
   cardBackImage: {
     width: '100%',
     height: '100%',
+  },
+  cardBackInnerLine: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    bottom: 5,
+    left: 5,
+    borderRadius: 17,
+    borderWidth: 1,
+    borderColor: 'rgba(241, 213, 138, 0.2)',
   },
   frontContent: {
     flex: 1,
